@@ -109,22 +109,26 @@ void sendDataToPlayers(t_game* game) {
 
   t_container container;
 
-  printf("before copying\n");
 
   // copy map info
-  strcpy(container.map, "LA MAP WESH");
-
-  printf("after copying\n");
-
+  strcpy(container.map, "\n\n--INCOMMING--\n");
+  for (i = 0; i < 4; i++)
+  {
+    if (game->players[i])
+    {
+      char tmp[100];
+      sprintf(tmp, "player %d => x: %d, y: %d, dir: %d\n", i + 1, game->players[i]->x, game->players[i]->y, game->players[i]->direction);
+      strcat(container.map, tmp);
+    }
+  }
+  strcat(container.map, "--OVER--\n\n");
 
   for (i = 0; i < 4; i++)
   {
     if (game->players[i])
     {
-      printf("before sending\n");
       // maybe this should be in a while statement ...
       send(game->players[i]->address, &container, sizeof(container), 0);
-      printf("after sending\n");
     }
   }
 }
