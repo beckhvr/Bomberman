@@ -1,5 +1,10 @@
 #include "server.h"
 
+
+/*-----------------------------------------------------------------------------
+------(More or less done)------------------------------------------------------
+-----------------------------------------------------------------------------*/
+
 // creating a socket to handle entering connexions.
 int create_connection_socket(port) {
   int connection_socket;
@@ -31,11 +36,6 @@ int create_connection_socket(port) {
   return connection_socket;
 }
 
-
-
-
-
-
 // returns max file listener
 int initFileListener(t_game* game) {
   int max;
@@ -63,6 +63,24 @@ int initFileListener(t_game* game) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*-----------------------------------------------------------------------------
+------(To Work on)-------------------------------------------------------------
+-----------------------------------------------------------------------------*/
 
 void handleReceivedEvent(t_game* game) {
   struct sockaddr_in socket_in;
@@ -175,6 +193,15 @@ void sendDataToPlayers(t_game* game) {
     }
   }
 }
+
+
+
+
+
+
+
+
+
 
 
 void game_loop(t_game* game) {
