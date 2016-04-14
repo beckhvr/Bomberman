@@ -1,59 +1,68 @@
 #include "server.h"
 
-void handleReceivedEvent(t_game* game) {
+void addPlayer(t_game* game, int new_socket) {
+  for (int i = 0; i < 4; i++) {
+    if(game->players[i] == NULL) {
+      game->players[i] = malloc(sizeof(t_player));
+      game->players[i]->address = new_socket;
+
+      game->players[i]->hp = 3;
+
+      // set position X
+      if (i < 3) {
+        game->players[i]->x = 0;
+      } else {
+        game->players[i]->x = 100;
+      }
+
+      // set position Y
+      if ((i % 2) == 1) {
+        game->players[i]->y = 0;
+      } else {
+        game->players[i]->y = 100;
+      }
+
+      game->players[i]->direction = 3; // all facing down at first
+
+      // t_player_actions actions;
+      // int cooldown;
+
+      break;
+    }
+  }
+}
+
+void handleNewPlayer(t_game* game) {
   struct sockaddr_in socket_in;
   int addrlen = sizeof(socket_in);
   int new_socket;
+
+  if ((new_socket = accept(game->connection_socket, (struct sockaddr *)&socket_in, (socklen_t*)&addrlen)) < 0) {
+    perror("accept");
+    exit(-1);
+  }
+
+  //inform user of socket number - used in send and receive commands
+  printf("New connection , socket fd is %d , ip is : %s , port : %d \n" , new_socket, inet_ntoa(socket_in.sin_addr), ntohs(socket_in.sin_port));
+
+  if (get_player_count(game) < 4) {
+    addPlayer(game, new_socket);
+  } else {
+    // tell the nicely but firmly to get the fuck away
+    printf("let's tell them to fuckoff ... \n");
+    send(new_socket, "GET OUT !", 10, 0);
+    close(new_socket);
+  }
+}
+
+void handleReceivedEvent(t_game* game) {
   char buffer[1024];
+  struct sockaddr_in socket_in;
+  int addrlen = sizeof(socket_in);
 
   //If something happened on the master socket , then its an incoming connection
   if (FD_ISSET(game->connection_socket, game->socket_list)) {
-    if ((new_socket = accept(game->connection_socket, (struct sockaddr *)&socket_in, (socklen_t*)&addrlen)) < 0) {
-      perror("accept");
-      exit(-1);
-    }
-
-    //inform user of socket number - used in send and receive commands
-    printf("New connection , socket fd is %d , ip is : %s , port : %d \n" , new_socket, inet_ntoa(socket_in.sin_addr), ntohs(socket_in.sin_port));
-
-
-    // make sure we have enough space here
-    int nbPlayers = 0;
-    for (int i = 0; i < 4; i++) {
-      if(game->players[i] != NULL) {
-        nbPlayers++;
-      }
-    }
-
-
-
-    // for test purposes :
-    // nbPlayers = 4;
-
-
-
-    if (nbPlayers < 4) {
-      //send new connection greeting message
-      char *message = "WELCOME\n";
-      if(send(new_socket, message, strlen(message), 0) != strlen(message)) {
-        perror("send");
-      }
-
-      //add new socket to array of sockets
-      for (int i = 0; i < 4; i++) {
-        if(game->players[i] == NULL) {
-          game->players[i] = malloc(sizeof(t_player));
-          game->players[i]->address = new_socket;
-          break;
-        }
-      }
-    } else {
-      printf("let's tell them to fuckoff ... \n");
-      // tell the nicely but firmly to get the fuck away
-      char *refuseMessage = "no more space";
-      send(new_socket, refuseMessage, strlen(refuseMessage), 0);
-      close(new_socket);
-    }
+    handleNewPlayer(game);
   }
   //else its some IO operation on some other socket
   else {

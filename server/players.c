@@ -9,6 +9,22 @@ void init_players(t_game* game)
   }
 }
 
+int get_player_count(t_game* game)
+{
+  int count;
+
+  count = 0;
+  for (int i = 0; i < 4; i++)
+  {
+    if(game->players[i])
+    {
+      count++;
+    }
+  }
+
+  return count;
+}
+
 void free_players(t_game* game)
 {
   int i;

@@ -102,3 +102,5 @@ int init_map(t_game*);
 void free_map(t_game*);
 void init_players(t_game*);
 void free_players(t_game*);
+int get_player_count(t_game*);
+void handleNewPlayer(t_game*);
