@@ -8,8 +8,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-
-
+#include "../shared/shared.h"
 
 // bombs are placed on the closest block in front of the player (we have the x/y of the player, and his direction)
 // from there, we calculate the nest block, and if we can place a bomb, we do. (we can only place a bomb if there are no colisions with players, or blocks)
@@ -69,28 +68,6 @@ typedef struct s_game
   t_bomb* bombs; // chained list of bombs
   t_flame* flame; // chained list of flames
 } t_game;
-
-
-
-
-// //-----------------------(TO SEND TO CLIENT)-----------------------//
-// // this is what we sent to the clients !
-// typedef struct s_game
-// {
-//   char map[1024];
-//   t_player players[4];
-// } t_game;
-
-// typedef struct s_player
-// {
-//   int x;
-//   int y;
-//   int facing; // 1 - up, 2 - right, 3 - down, 4 - left
-// } t_player;
-// //---------------------------------------------------------------//
-
-
-
 
 /*----(Prototypes)-----------------------------------------------------------*/
 int create_connection_socket(int);

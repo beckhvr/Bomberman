@@ -103,12 +103,28 @@ void handleReceivedEvent(t_game* game) {
 void sendDataToPlayers(t_game* game) {
   int i;
 
+
+
+  // prepare data to be sent :
+
+  t_container container;
+
+  printf("before copying\n");
+
+  // copy map info
+  strcpy(container.map, "LA MAP WESH");
+
+  printf("after copying\n");
+
+
   for (i = 0; i < 4; i++)
   {
     if (game->players[i])
     {
+      printf("before sending\n");
       // maybe this should be in a while statement ...
-      send(game->players[i]->address, "INFO", 5, 0);
+      send(game->players[i]->address, &container, sizeof(container), 0);
+      printf("after sending\n");
     }
   }
 }

@@ -8,6 +8,8 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
+#include "../shared/shared.h"
+
 #define MAXBUF 1024
 
 int main()
@@ -49,10 +51,11 @@ int main()
   } else {
     // we recieved the welcome message, proceeed to listen on the socket.
 
-    while (1) {
-      bzero(buffer, MAXBUF);
+    t_container container;
 
-      if (recv(connexion_socket, buffer, sizeof(buffer), 0) == 0) {
+    while (1) {
+      bzero(&container, sizeof(container));
+      if (recv(connexion_socket, &container, sizeof(container), 0) == 0) {
         printf("server disconnected\n");
         break;
       }
@@ -63,7 +66,8 @@ int main()
       //   send(connexion_socket, "EVENT", 6, 0);
       // }
 
-      printf("recieved: %s\n", buffer);
+      printf("recieved: %s\n", container.map);
+
     }
   }
 
