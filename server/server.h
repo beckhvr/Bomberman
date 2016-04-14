@@ -88,3 +88,17 @@ typedef struct s_game
 //   int facing; // 1 - up, 2 - right, 3 - down, 4 - left
 // } t_player;
 // //---------------------------------------------------------------//
+
+
+
+
+/*----(Prototypes)-----------------------------------------------------------*/
+int create_connection_socket(int);
+int initFileListener(t_game*);
+void handleReceivedEvent(t_game*);
+void sendDataToPlayers(t_game*);
+void game_loop(t_game*);
+int init_map(t_game*);
+void free_map(t_game*);
+void init_players(t_game*);
+void free_players(t_game*);

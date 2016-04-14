@@ -1,8 +1,8 @@
 SERVER = server
 CLIENT = client
 BUILDS = builds
-SERVER_SRCS = server/server.c
-CLIENT_SRCS = client/client.c
+SERVER_SRCS = $(wildcard server/*.c)
+CLIENT_SRCS = $(wildcard client/*.c)
 SERVER_OBJS = $(SERVER_SRCS:.c=.o)
 CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
 CC = gcc
