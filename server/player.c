@@ -17,7 +17,7 @@ int get_player_count()
   count = 0;
   for (int i = 0; i < 4; i++)
   {
-    if(game->players[i])
+    if (game->players[i])
     {
       count++;
     }
@@ -64,6 +64,22 @@ void add_player(int address)
   }
 }
 
+void free_player(t_player* player)
+{
+  close(player->address);
+  free(player->events);
+  free(player);
+}
+
+void apply_player_event(t_player* player, t_event* event)
+{
+  player->events->x += event->x;
+  player->events->y += event->y;
+  player->events->direction = event->direction;
+  player->events->bomb = event->bomb;
+}
+
+
 void free_players()
 {
   int i;
@@ -72,8 +88,7 @@ void free_players()
   {
     if (game->players[i])
     {
-      close(game->players[i]->address);
-      free(game->players[i]);
+      free_player(game->players[i]);
     }
   }
 }

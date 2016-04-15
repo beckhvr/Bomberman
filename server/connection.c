@@ -7,7 +7,7 @@ int create_connection_socket(int port) {
   char yes;
 
   if ((connection_socket = socket(PF_INET, SOCK_STREAM, 0)) < 0)
-    return -1;
+    return (-1);
 
   memset(&socket_in, 0, sizeof socket_in);
   socket_in.sin_family = AF_INET;
@@ -19,13 +19,13 @@ int create_connection_socket(int port) {
   if ((bind(connection_socket, (struct sockaddr*)&socket_in, sizeof(socket_in))) != 0)
   {
     close(connection_socket);
-    return -1;
+    return (-1);
   }
 
   if ((listen(connection_socket, 4)) != 0)
   {
     close(connection_socket);
-    return -1;
+    return (-1);
   }
 
   return connection_socket;
@@ -45,7 +45,7 @@ int init_file_listener() {
     if (game->players[i] != NULL)
     {
       FD_SET(game->players[i]->address, game->socket_list);
-      if(game->players[i]->address > max)
+      if (game->players[i]->address > max)
       {
         max = game->players[i]->address;
       }

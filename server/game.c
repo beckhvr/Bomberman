@@ -1,48 +1,22 @@
 #include "server.h"
 
-void handleReceivedEvent() {
-  t_event event;
-  struct sockaddr_in socket_in;
-  int addrlen = sizeof(socket_in);
-
-  //If something happened on the master socket , then its an incoming connection
-  if (FD_ISSET(game->connection_socket, game->socket_list)) {
-    accept_new_player();
+int init_game()
+{
+  if (init_map() < 0)
+  {
+    return (-1);
   }
-  //else its some IO operation on some other socket
-  else {
-    // check each socket
-    for (int i = 0; i < 4; i++) {
 
-      if (game->players[i]) {
-        int sd = game->players[i]->address;
-        int valread;
+  init_players();
+  game->isRunning = 1;
+  return (0);
+}
 
-        // triggers when it finds the socket that emited an event
-        if (FD_ISSET(sd, game->socket_list)) {
-          //Check if it was for closing , and also read the incoming message
-          // did it disconnect ?
-          if ((valread = read(sd, &event, sizeof(t_event))) == 0) {
-            //Somebody disconnected , get his details and print
-            getpeername(sd , (struct sockaddr*)&socket_in , (socklen_t*)&addrlen);
-            printf("Host disconnected , ip %s , port %d \n" , inet_ntoa(socket_in.sin_addr) , ntohs(socket_in.sin_port));
-
-            //Close the socket and mark as 0 in list for reuse
-            close(sd);
-            free(game->players[i]);
-            game->players[i] = NULL;
-          }
-          // if not, then it's a regular event, as in a user input ...
-          else {
-            game->players[i]->events->x += event.x;
-            game->players[i]->events->y += event.y;
-            game->players[i]->events->direction = event.direction;
-            game->players[i]->events->bomb = event.bomb;
-          }
-        }
-      }
-    }
-  }
+void free_game()
+{
+  free_map();
+  // free lists of bombs and flames ...
+  free_players();
 }
 
 void sendDataToPlayers() {
@@ -116,7 +90,8 @@ void run_game_cycle() {
 
 
 
-void game_loop() {
+void game_loop()
+{
   int max;
   int activity;
   struct timeval timeout;
@@ -125,24 +100,24 @@ void game_loop() {
   game->socket_list = &socket_list;
   timeout.tv_sec = 0;
   timeout.tv_usec = 0;
-
-  // TODO: listen to user input, so we can specify when we want to exit the server and clean up connections !!
-
-  while (game->isRunning) {
+  while (game->isRunning)
+  {
     max = init_file_listener();
     activity = select(max + 1, game->socket_list, NULL, NULL, &timeout);
 
-    if (activity < 0) {
+    if (activity < 0)
+    {
       game->isRunning = 0;
-    } else if (activity > 0) {
-      handleReceivedEvent();
+    }
+    else if (activity > 0)
+    {
+      handle_received_event();
     }
 
-    // here, process game to calculate movement, explosions, lose of life ...
     run_game_cycle();
+    sendDataToPlayers();
 
     // we have a little wait period, for the moment it is 1 second
     usleep(160000);
-    sendDataToPlayers();
   }
 }

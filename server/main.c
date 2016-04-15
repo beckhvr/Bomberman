@@ -1,40 +1,29 @@
 #include "server.h"
 
-
-
 int main(int argc, char const *argv[])
 {
-  t_game tmp_game;
+  int port;
 
-  game = &tmp_game;
+  port = 3334;
+  if ((game = malloc(sizeof(t_game))) == NULL)
+  {
+    printf("unable to allocate space for game\n");
+    return (-1);
+  }
 
-
-  // don't end program if we write to a closed socket !
   signal(SIGPIPE, SIG_IGN);
-
-
-  if ((game->connection_socket = create_connection_socket(3334)) < 0) {
+  if ((game->connection_socket = create_connection_socket(port)) < 0)
+  {
     printf("unable to setup listener socket\n");
     return (-1);
   }
 
-  // init map
-  if (init_map() < 0) {
-    close(game->connection_socket);
-    printf("unable to init map\n");
-    return (-1);
+  if (init_game() == 0)
+  {
+    game_loop();
+    free_game();
   }
 
-  // init players
-  init_players();
-
-  // init game
-  game->isRunning = 1;
-  game_loop();
-
-  free_map();
-  // free lists of bombs and flames ...
-  free_players();
   close(game->connection_socket);
-  return 0;
+  return (0);
 }

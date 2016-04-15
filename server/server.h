@@ -66,7 +66,7 @@ typedef struct s_game
 /*----(Prototypes)-----------------------------------------------------------*/
 int create_connection_socket(int);
 int init_file_listener();
-void handleReceivedEvent();
+void handle_received_event();
 void sendDataToPlayers();
 void game_loop();
 int init_map();
@@ -76,7 +76,10 @@ void free_players();
 int get_player_count();
 void accept_new_player();
 void add_player(int);
-
+void free_player(t_player*);
+void apply_player_event(t_player*, t_event*);
+int init_game();
+void free_game();
 
 
 /*----(Globals)--------------------------------------------------------------*/
