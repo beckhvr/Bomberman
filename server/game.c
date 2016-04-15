@@ -45,6 +45,7 @@ void handleNewPlayer(t_game* game) {
   //inform user of socket number - used in send and receive commands
   printf("New connection , socket fd is %d , ip is : %s , port : %d \n" , new_socket, inet_ntoa(socket_in.sin_addr), ntohs(socket_in.sin_port));
 
+
   if (get_player_count(game) < 4) {
     addPlayer(game, new_socket);
   } else {
@@ -56,7 +57,7 @@ void handleNewPlayer(t_game* game) {
 }
 
 void handleReceivedEvent(t_game* game) {
-  char buffer[1024];
+  t_event event;
   struct sockaddr_in socket_in;
   int addrlen = sizeof(socket_in);
 
@@ -75,10 +76,9 @@ void handleReceivedEvent(t_game* game) {
 
         // triggers when it finds the socket that emited an event
         if (FD_ISSET(sd, game->socket_list)) {
-
           //Check if it was for closing , and also read the incoming message
           // did it disconnect ?
-          if ((valread = read(sd , buffer, 1024)) == 0) {
+          if ((valread = read(sd, &event, sizeof(t_event))) == 0) {
             //Somebody disconnected , get his details and print
             getpeername(sd , (struct sockaddr*)&socket_in , (socklen_t*)&addrlen);
             printf("Host disconnected , ip %s , port %d \n" , inet_ntoa(socket_in.sin_addr) , ntohs(socket_in.sin_port));
@@ -90,7 +90,11 @@ void handleReceivedEvent(t_game* game) {
           }
           // if not, then it's a regular event, as in a user input ...
           else {
-            printf("player %d has sent: %s\n", i, buffer);
+            // maybe checksum ?
+
+            game->players[i]->x += event.x;
+            game->players[i]->y += event.y;
+            game->players[i]->direction = event.direction;
             //set the string terminating NULL byte on the end of the data read
             // send(sd , "message\0", 8, 0);
           }
@@ -108,7 +112,6 @@ void sendDataToPlayers(t_game* game) {
   // prepare data to be sent :
 
   t_container container;
-
 
   // copy map info
   strcpy(container.map, "\n\n--INCOMMING--\n");
@@ -157,7 +160,7 @@ void game_loop(t_game* game) {
     }
 
     // we have a little wait period, for the moment it is 1 second
-    sleep(1);
+    usleep(160000);
     sendDataToPlayers(game);
   }
 }

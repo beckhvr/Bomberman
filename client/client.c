@@ -60,11 +60,34 @@ int main()
         break;
       }
 
-      // // 1 chance sur 20 d'envoyer un evenement.
-      // int tmp = rand() % 20;
-      // if (tmp < 10) {
-      //   send(connexion_socket, "EVENT", 6, 0);
-      // }
+
+
+      // 1 chance sur 20 d'envoyer un evenement.
+      int tmp = rand() % 20;
+      if (tmp < 10) {
+        // on envoi des events au hazard.
+
+        t_event event;
+
+        event.bomb = 0;
+        if (tmp < 3) {
+          event.x = -1;
+          event.y = 0;
+          event.direction = 1;
+        } else if (tmp < 6) {
+          event.x = 1;
+          event.y = 1;
+          event.direction = 1;
+        } else {
+          event.x = 0;
+          event.y = -1;
+          event.direction = 1;
+        }
+
+        send(connexion_socket, &event, sizeof(event), 0);
+      }
+
+
 
       printf("recieved: %s\n", container.map);
 

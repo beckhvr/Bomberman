@@ -4,6 +4,11 @@ int main(int argc, char const *argv[])
 {
   t_game game;
 
+
+  // try this out
+  signal(SIGPIPE, SIG_IGN);
+
+
   if ((game.connection_socket = create_connection_socket(3334)) < 0) {
     printf("unable to setup listener socket\n");
     return (-1);
