@@ -51,9 +51,13 @@ void add_player(int address)
         game->players[i]->y = 100;
       }
       game->players[i]->direction = 3;
-      // t_player_actions actions;
-      // int cooldown;
 
+
+      game->players[i]->events = malloc(sizeof(t_event));
+      game->players[i]->events->x = 0;
+      game->players[i]->events->y = 0;
+      game->players[i]->events->direction = 3;
+      game->players[i]->events->bomb = 0;
 
       break;
     }

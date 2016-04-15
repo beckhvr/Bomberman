@@ -34,13 +34,10 @@ void handleReceivedEvent() {
           }
           // if not, then it's a regular event, as in a user input ...
           else {
-            // maybe checksum ?
-
-            game->players[i]->x += event.x;
-            game->players[i]->y += event.y;
-            game->players[i]->direction = event.direction;
-            //set the string terminating NULL byte on the end of the data read
-            // send(sd , "message\0", 8, 0);
+            game->players[i]->events->x += event.x;
+            game->players[i]->events->y += event.y;
+            game->players[i]->events->direction = event.direction;
+            game->players[i]->events->bomb = event.bomb;
           }
         }
       }
@@ -80,12 +77,38 @@ void sendDataToPlayers() {
 
 
 void run_game_cycle() {
+  int i;
 
   // bombs
 
   // flames
 
-  // for each player, move them. + place bombs (with restrictions on blocks etc)
+  // @TODO: clean this up, and check for colisions !!
+  for (i = 0; i < 4; i++) {
+    if (game->players[i]) {
+      game->players[i]->x += game->players[i]->events->x;
+      if (game->players[i]->x < 0) {
+        game->players[i]->x = 0;
+      }
+      if (game->players[i]->x > 100) {
+        game->players[i]->x = 100;
+      }
+      game->players[i]->y += game->players[i]->events->y;
+      if (game->players[i]->y < 0) {
+        game->players[i]->y = 0;
+      }
+      if (game->players[i]->y > 100) {
+        game->players[i]->y = 100;
+      }
+      game->players[i]->direction = game->players[i]->events->direction;
+      if (game->players[i]->events->bomb > 0) {
+        printf("PLACING BOMB at : %d - %d\n", game->players[i]->x, game->players[i]->y);
+        game->players[i]->events->bomb = 0;
+      }
+    }
+  }
+
+
 
   // blocks
 

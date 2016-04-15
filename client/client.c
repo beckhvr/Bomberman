@@ -69,19 +69,21 @@ int main()
 
         t_event event;
 
-        event.bomb = 0;
         if (tmp < 3) {
           event.x = -1;
           event.y = 0;
           event.direction = 1;
+          event.bomb = 1;
         } else if (tmp < 6) {
           event.x = 1;
           event.y = 1;
           event.direction = 1;
+          event.bomb = 0;
         } else {
           event.x = 0;
           event.y = -1;
           event.direction = 1;
+          event.bomb = 0;
         }
 
         send(connexion_socket, &event, sizeof(event), 0);

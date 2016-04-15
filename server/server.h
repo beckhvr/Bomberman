@@ -40,19 +40,13 @@ typedef struct s_block
   int hp;
 } t_block;
 
-typedef struct s_player_actions
-{
-  int x; // -1, 0 or 1
-  int y; // -1, 0 or 1
-} t_player_actions;
-
 typedef struct s_player
 {
   int address; // socket address
   int x;
   int y;
   int direction; // which way is the player faced
-  t_player_actions actions;
+  t_event* events;
   int hp; // health points ... once he arrives at 0, he becomes a gost (not allowed to place bombs and can't get hurt)
   int cooldown; // is the player allowed to place bomb
 } t_player;
