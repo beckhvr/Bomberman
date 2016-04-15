@@ -9,7 +9,7 @@ int main(int argc, char const *argv[])
   game = &tmp_game;
 
 
-  // try this out
+  // don't end program if we write to a closed socket !
   signal(SIGPIPE, SIG_IGN);
 
 

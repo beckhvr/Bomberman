@@ -1,61 +1,5 @@
 #include "server.h"
 
-void addPlayer(int new_socket) {
-  for (int i = 0; i < 4; i++) {
-    if(game->players[i] == NULL) {
-      game->players[i] = malloc(sizeof(t_player));
-      game->players[i]->address = new_socket;
-
-      game->players[i]->hp = 3;
-
-      // set position X
-      if (i < 3) {
-        game->players[i]->x = 0;
-      } else {
-        game->players[i]->x = 100;
-      }
-
-      // set position Y
-      if ((i % 2) == 1) {
-        game->players[i]->y = 0;
-      } else {
-        game->players[i]->y = 100;
-      }
-
-      game->players[i]->direction = 3; // all facing down at first
-
-      // t_player_actions actions;
-      // int cooldown;
-
-      break;
-    }
-  }
-}
-
-void handleNewPlayer() {
-  struct sockaddr_in socket_in;
-  int addrlen = sizeof(socket_in);
-  int new_socket;
-
-  if ((new_socket = accept(game->connection_socket, (struct sockaddr *)&socket_in, (socklen_t*)&addrlen)) < 0) {
-    perror("accept");
-    exit(-1);
-  }
-
-  //inform user of socket number - used in send and receive commands
-  printf("New connection , socket fd is %d , ip is : %s , port : %d \n" , new_socket, inet_ntoa(socket_in.sin_addr), ntohs(socket_in.sin_port));
-
-
-  if (get_player_count(game) < 4) {
-    addPlayer(new_socket);
-  } else {
-    // tell the nicely but firmly to get the fuck away
-    printf("let's tell them to fuckoff ... \n");
-    send(new_socket, "GET OUT !", 10, 0);
-    close(new_socket);
-  }
-}
-
 void handleReceivedEvent() {
   t_event event;
   struct sockaddr_in socket_in;
@@ -63,7 +7,7 @@ void handleReceivedEvent() {
 
   //If something happened on the master socket , then its an incoming connection
   if (FD_ISSET(game->connection_socket, game->socket_list)) {
-    handleNewPlayer(game);
+    accept_new_player();
   }
   //else its some IO operation on some other socket
   else {
@@ -107,8 +51,6 @@ void handleReceivedEvent() {
 void sendDataToPlayers() {
   int i;
 
-
-
   // prepare data to be sent :
 
   t_container container;
@@ -136,6 +78,21 @@ void sendDataToPlayers() {
   }
 }
 
+
+void run_game_cycle() {
+
+  // bombs
+
+  // flames
+
+  // for each player, move them. + place bombs (with restrictions on blocks etc)
+
+  // blocks
+
+}
+
+
+
 void game_loop() {
   int max;
   int activity;
@@ -149,18 +106,20 @@ void game_loop() {
   // TODO: listen to user input, so we can specify when we want to exit the server and clean up connections !!
 
   while (game->isRunning) {
-    max = initFileListener(game);
+    max = init_file_listener();
     activity = select(max + 1, game->socket_list, NULL, NULL, &timeout);
 
     if (activity < 0) {
-      printf("select error");
       game->isRunning = 0;
     } else if (activity > 0) {
-      handleReceivedEvent(game);
+      handleReceivedEvent();
     }
+
+    // here, process game to calculate movement, explosions, lose of life ...
+    run_game_cycle();
 
     // we have a little wait period, for the moment it is 1 second
     usleep(160000);
-    sendDataToPlayers(game);
+    sendDataToPlayers();
   }
 }

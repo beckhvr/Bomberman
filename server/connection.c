@@ -32,7 +32,7 @@ int create_connection_socket(int port) {
 }
 
 // returns max file listener
-int initFileListener() {
+int init_file_listener() {
   int max;
   int i;
 
@@ -55,3 +55,27 @@ int initFileListener() {
   return max;
 }
 
+void accept_new_player() {
+  struct sockaddr_in socket_in;
+  int addrlen = sizeof(socket_in);
+  int new_socket;
+
+  if ((new_socket = accept(game->connection_socket, (struct sockaddr *)&socket_in, (socklen_t*)&addrlen)) < 0)
+  {
+    return;
+  }
+
+  //inform user of socket number - used in send and receive commands
+  printf("New connection , socket fd is %d , ip is : %s , port : %d \n" , new_socket, inet_ntoa(socket_in.sin_addr), ntohs(socket_in.sin_port));
+
+
+  if (get_player_count() < 4)
+  {
+    add_player(new_socket);
+  }
+  else
+  {
+    printf("let's tell them to fuckoff ... \n");
+    close(new_socket);
+  }
+}
