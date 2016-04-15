@@ -1,6 +1,6 @@
 #include "server.h"
 
-void init_players(t_game* game)
+void init_players()
 {
   int i;
 
@@ -9,7 +9,7 @@ void init_players(t_game* game)
   }
 }
 
-int get_player_count(t_game* game)
+int get_player_count()
 {
   int count;
 
@@ -25,7 +25,7 @@ int get_player_count(t_game* game)
   return count;
 }
 
-void free_players(t_game* game)
+void free_players()
 {
   int i;
 

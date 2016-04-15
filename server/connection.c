@@ -32,7 +32,7 @@ int create_connection_socket(int port) {
 }
 
 // returns max file listener
-int initFileListener(t_game* game) {
+int initFileListener() {
   int max;
   int i;
 

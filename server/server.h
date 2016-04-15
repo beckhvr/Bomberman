@@ -71,13 +71,20 @@ typedef struct s_game
 
 /*----(Prototypes)-----------------------------------------------------------*/
 int create_connection_socket(int);
-int initFileListener(t_game*);
-void handleReceivedEvent(t_game*);
-void sendDataToPlayers(t_game*);
-void game_loop(t_game*);
-int init_map(t_game*);
-void free_map(t_game*);
-void init_players(t_game*);
-void free_players(t_game*);
-int get_player_count(t_game*);
-void handleNewPlayer(t_game*);
+int initFileListener();
+void handleReceivedEvent();
+void sendDataToPlayers();
+void game_loop();
+int init_map();
+void free_map();
+void init_players();
+void free_players();
+int get_player_count();
+void handleNewPlayer();
+
+
+
+/*----(Globals)--------------------------------------------------------------*/
+t_game* game;
+
+

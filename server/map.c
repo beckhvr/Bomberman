@@ -1,7 +1,7 @@
 #include "server.h"
 
 
-int init_map(t_game* game) {
+int init_map() {
 
   // init all the lists for blocks, bombs and flames
 
@@ -9,6 +9,6 @@ int init_map(t_game* game) {
   return 0;
 }
 
-void free_map(t_game* game) {
+void free_map() {
 
 }

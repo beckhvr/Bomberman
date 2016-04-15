@@ -1,6 +1,6 @@
 #include "server.h"
 
-void addPlayer(t_game* game, int new_socket) {
+void addPlayer(int new_socket) {
   for (int i = 0; i < 4; i++) {
     if(game->players[i] == NULL) {
       game->players[i] = malloc(sizeof(t_player));
@@ -32,7 +32,7 @@ void addPlayer(t_game* game, int new_socket) {
   }
 }
 
-void handleNewPlayer(t_game* game) {
+void handleNewPlayer() {
   struct sockaddr_in socket_in;
   int addrlen = sizeof(socket_in);
   int new_socket;
@@ -47,7 +47,7 @@ void handleNewPlayer(t_game* game) {
 
 
   if (get_player_count(game) < 4) {
-    addPlayer(game, new_socket);
+    addPlayer(new_socket);
   } else {
     // tell the nicely but firmly to get the fuck away
     printf("let's tell them to fuckoff ... \n");
@@ -56,7 +56,7 @@ void handleNewPlayer(t_game* game) {
   }
 }
 
-void handleReceivedEvent(t_game* game) {
+void handleReceivedEvent() {
   t_event event;
   struct sockaddr_in socket_in;
   int addrlen = sizeof(socket_in);
@@ -104,7 +104,7 @@ void handleReceivedEvent(t_game* game) {
   }
 }
 
-void sendDataToPlayers(t_game* game) {
+void sendDataToPlayers() {
   int i;
 
 
@@ -136,7 +136,7 @@ void sendDataToPlayers(t_game* game) {
   }
 }
 
-void game_loop(t_game* game) {
+void game_loop() {
   int max;
   int activity;
   struct timeval timeout;
