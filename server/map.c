@@ -55,7 +55,7 @@ void free_elements(t_element* list)
   t_element* to_free;
 
   element = list;
-  while(element != NULL)
+  while (element != NULL)
   {
     to_free = element;
     element = element->next;

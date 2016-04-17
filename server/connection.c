@@ -10,7 +10,8 @@
 #include "server.h"
 
 // creating a socket to handle entering connexions.
-int create_connection_socket(int port) {
+int create_connection_socket(int port)
+{
   int connection_socket;
   struct sockaddr_in socket_in;
   char yes;
