@@ -91,7 +91,23 @@ int main()
 
 
 
-      printf("recieved: %s\n", container.map);
+
+      printf("\n\n--Start--\n");
+      // decoding what we received:
+      for (int i = 0; i < 4; i++) {
+        if (container.players[i].playing == 1) {
+          printf("player %d => x:%d y:%d facing:%d hp:%d\n", i, container.players[i].x, container.players[i].y, container.players[i].direction, container.players[i].hp);
+        }
+      }
+      printf("--end--\n\n");
+
+
+
+
+
+
+
+
 
     }
   }

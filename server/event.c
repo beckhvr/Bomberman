@@ -39,7 +39,7 @@ void handle_player_event()
 void handle_received_event() {
   if (FD_ISSET(game->connection_socket, game->socket_list))
   {
-    accept_new_player();
+    accept_new_connection();
   }
   else
   {

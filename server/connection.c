@@ -55,7 +55,7 @@ int init_file_listener() {
   return max;
 }
 
-void accept_new_player() {
+void accept_new_connection() {
   struct sockaddr_in socket_in;
   int addrlen = sizeof(socket_in);
   int new_socket;

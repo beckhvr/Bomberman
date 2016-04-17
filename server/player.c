@@ -35,29 +35,33 @@ void add_player(int address)
   {
     if (game->players[i] == NULL)
     {
-      game->players[i] = malloc(sizeof(t_player));
 
-      // all of this extracted to a separat function to set details ...
-      game->players[i]->address = address;
-      game->players[i]->hp = 3;
-      if (i < 3) {
-        game->players[i]->x = 0;
+      if ((game->players[i] = malloc(sizeof(t_player))) != NULL) {
+
+        // all of this extracted to a separat function to set details ...
+        game->players[i]->address = address;
+        game->players[i]->hp = 3;
+        if (i < 3) {
+          game->players[i]->x = 0;
+        } else {
+          game->players[i]->x = 100;
+        }
+        if ((i % 2) == 1) {
+          game->players[i]->y = 0;
+        } else {
+          game->players[i]->y = 100;
+        }
+        game->players[i]->direction = 3;
+
+
+        game->players[i]->events = malloc(sizeof(t_event));
+        game->players[i]->events->x = 0;
+        game->players[i]->events->y = 0;
+        game->players[i]->events->direction = 3;
+        game->players[i]->events->bomb = 0;
       } else {
-        game->players[i]->x = 100;
+        close(address);
       }
-      if ((i % 2) == 1) {
-        game->players[i]->y = 0;
-      } else {
-        game->players[i]->y = 100;
-      }
-      game->players[i]->direction = 3;
-
-
-      game->players[i]->events = malloc(sizeof(t_event));
-      game->players[i]->events->x = 0;
-      game->players[i]->events->y = 0;
-      game->players[i]->events->direction = 3;
-      game->players[i]->events->bomb = 0;
 
       break;
     }

@@ -26,18 +26,19 @@ void sendDataToPlayers() {
 
   t_container container;
 
-  // copy map info
-  strcpy(container.map, "\n\n--INCOMMING--\n");
   for (i = 0; i < 4; i++)
   {
     if (game->players[i])
     {
-      char tmp[100];
-      sprintf(tmp, "player %d => x: %d, y: %d, dir: %d\n", i + 1, game->players[i]->x, game->players[i]->y, game->players[i]->direction);
-      strcat(container.map, tmp);
+      container.players[i].playing = 1;
+      container.players[i].x = game->players[i]->x;
+      container.players[i].y = game->players[i]->y;
+      container.players[i].direction = game->players[i]->direction;
+      container.players[i].hp = game->players[i]->hp;
+    } else {
+      container.players[i].playing = 0;
     }
   }
-  strcat(container.map, "--OVER--\n\n");
 
   for (i = 0; i < 4; i++)
   {

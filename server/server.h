@@ -74,7 +74,7 @@ void free_map();
 void init_players();
 void free_players();
 int get_player_count();
-void accept_new_player();
+void accept_new_connection();
 void add_player(int);
 void free_player(t_player*);
 void apply_player_event(t_player*, t_event*);
