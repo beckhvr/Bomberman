@@ -1,3 +1,12 @@
+/*
+** connection.c for Bomberman in /Users/becketthover/Desktop/Bomberman/server
+**
+** Made by HOVER Beckett
+** Login   <hover_b@etna-alternance.net>
+**
+** Started on  Sun Apr 17 23:14:23 2016 HOVER Beckett
+** Last update Sun Apr 17 23:14:35 2016 HOVER Beckett
+*/
 #include "server.h"
 
 // creating a socket to handle entering connexions.

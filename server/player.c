@@ -1,3 +1,12 @@
+/*
+** player.c for Bomberman in /Users/becketthover/Desktop/Bomberman/server
+**
+** Made by HOVER Beckett
+** Login   <hover_b@etna-alternance.net>
+**
+** Started on  Sun Apr 17 23:17:09 2016 HOVER Beckett
+** Last update Sun Apr 17 23:17:15 2016 HOVER Beckett
+*/
 #include "server.h"
 
 void init_players()

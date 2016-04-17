@@ -1,3 +1,12 @@
+/*
+** colision.c for Bomberman in /Users/becketthover/Desktop/Bomberman/server
+**
+** Made by HOVER Beckett
+** Login   <hover_b@etna-alternance.net>
+**
+** Started on  Sun Apr 17 23:13:56 2016 HOVER Beckett
+** Last update Sun Apr 17 23:14:07 2016 HOVER Beckett
+*/
 #include "server.h"
 
 int collision_handler(t_collider* c1, t_collider* c2)

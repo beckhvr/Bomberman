@@ -1,3 +1,12 @@
+/*
+** event.c for Bomberman in /Users/becketthover/Desktop/Bomberman/server
+**
+** Made by HOVER Beckett
+** Login   <hover_b@etna-alternance.net>
+**
+** Started on  Sun Apr 17 23:14:58 2016 HOVER Beckett
+** Last update Sun Apr 17 23:15:08 2016 HOVER Beckett
+*/
 #include "server.h"
 
 void display_connection(char* message, int address)
