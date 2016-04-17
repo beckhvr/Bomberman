@@ -10,39 +10,63 @@
 
 #include "../shared/shared.h"
 
-// bombs are placed on the closest block in front of the player (we have the x/y of the player, and his direction)
-// from there, we calculate the nest block, and if we can place a bomb, we do. (we can only place a bomb if there are no colisions with players, or blocks)
-typedef struct s_bomb t_bomb;
-struct s_bomb
-{
-  int x;
-  int y;
-  int duration; // this will be the time it has lived. after 3 seconds, it explodes and creates four flames
-};
+// // bombs are placed on the closest block in front of the player (we have the x/y of the player, and his direction)
+// // from there, we calculate the nest block, and if we can place a bomb, we do. (we can only place a bomb if there are no colisions with players, or blocks)
+// typedef struct s_bomb t_bomb;
+// struct s_bomb
+// {
+//   int x;
+//   int y;
+//   int duration; // this will be the time it has lived. after 3 seconds, it explodes and creates four flames
+// };
 
-// bomb to flame
-// x + 1, y, direction 2
-// x - 1, y, direction 4
-// x, y + 1, direction 3
-// x, y - 1, direction 1
-typedef struct s_flame t_flame;
-struct s_flame
-{
-  int x;
-  int y;
-  int direction; // 1,2,3,4 respectivly up,right,down,left
-};
-// a flame dies once it hits something, but it damages it.
+// // bomb to flame
+// // x + 1, y, direction 2
+// // x - 1, y, direction 4
+// // x, y + 1, direction 3
+// // x, y - 1, direction 1
+// typedef struct s_flame t_flame;
+// struct s_flame
+// {
+//   int x;
+//   int y;
+//   int direction; // 1,2,3,4 respectivly up,right,down,left
+// };
+// // a flame dies once it hits something, but it damages it.
 
-typedef struct s_block t_block;
-struct s_block
-{
+// typedef struct s_block t_block;
+// struct s_block
+// {
+//   int x;
+//   int y;
+//   int type;
+//   t_block* next;
+// };
+
+
+
+
+typedef struct s_element t_element;
+struct s_element {
   int x;
   int y;
   int type;
-  int hp;
-  t_block* next;
+  t_element* next;
 };
+
+typedef struct s_collider t_collider;
+struct s_collider {
+  int x;
+  int y;
+  int s;
+};
+
+
+
+
+
+
+
 
 typedef struct s_player t_player;
 struct s_player
@@ -64,9 +88,9 @@ struct s_game
   int max_socket_address;
   int isRunning;
   t_player* players[4];
-  t_block* block; // chained list of blocks
-  t_bomb* bomb; // chained list of bombs
-  t_flame* flame; // chained list of flames
+  t_element* block; // chained list of blocks
+  t_element* bomb; // chained list of bombs
+  t_element* flame; // chained list of flames
 };
 
 /*----(Prototypes)-----------------------------------------------------------*/
@@ -87,9 +111,16 @@ void apply_player_event(t_player*, t_event*);
 int init_game();
 void free_game();
 void formatPlayerInfo(t_container*);
+int collision_handler(t_collider*, t_collider*);
+int check_top_left_collision(t_collider*, t_collider*);
+int check_top_right_collision(t_collider*, t_collider*);
+int check_bottom_left_collision(t_collider*, t_collider*);
+int check_bottom_right_collision(t_collider*, t_collider*);
 
 
 /*----(Globals)--------------------------------------------------------------*/
 t_game* game;
+
+
 
 

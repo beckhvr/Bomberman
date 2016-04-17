@@ -42,14 +42,14 @@ void add_player(int address)
         game->players[i]->address = address;
         game->players[i]->hp = 3;
         if (i < 3) {
-          game->players[i]->x = 0;
+          game->players[i]->x = 2;
         } else {
-          game->players[i]->x = 100;
+          game->players[i]->x = 200;
         }
-        if ((i % 2) == 1) {
-          game->players[i]->y = 0;
+        if (((i + 1) % 2) == 1) {
+          game->players[i]->y = 2;
         } else {
-          game->players[i]->y = 100;
+          game->players[i]->y = 200;
         }
         game->players[i]->direction = 3;
 
