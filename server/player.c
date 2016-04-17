@@ -38,7 +38,7 @@ void add_player(int address)
 
       if ((game->players[i] = malloc(sizeof(t_player))) != NULL) {
 
-        // all of this extracted to a separat function to set details ...
+        //TODO: all of this extracted to a separat function to set details ...
         game->players[i]->address = address;
         game->players[i]->hp = 3;
         if (i < 3) {
@@ -53,7 +53,7 @@ void add_player(int address)
         }
         game->players[i]->direction = 3;
 
-
+        // TODO: check this malloc also
         game->players[i]->events = malloc(sizeof(t_event));
         game->players[i]->events->x = 0;
         game->players[i]->events->y = 0;
@@ -67,6 +67,25 @@ void add_player(int address)
     }
   }
 }
+
+void formatPlayerInfo(t_container* container)
+{
+  int i;
+
+  for (i = 0; i < 4; i++)
+  {
+    container->players[i].playing = 0;
+    if (game->players[i])
+    {
+      container->players[i].playing = 1;
+      container->players[i].x = game->players[i]->x;
+      container->players[i].y = game->players[i]->y;
+      container->players[i].direction = game->players[i]->direction;
+      container->players[i].hp = game->players[i]->hp;
+    }
+  }
+}
+
 
 void free_player(t_player* player)
 {

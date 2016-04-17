@@ -19,36 +19,14 @@ void free_game()
   free_players();
 }
 
-void sendDataToPlayers() {
-  int i;
 
-  // prepare data to be sent :
 
-  t_container container;
 
-  for (i = 0; i < 4; i++)
-  {
-    if (game->players[i])
-    {
-      container.players[i].playing = 1;
-      container.players[i].x = game->players[i]->x;
-      container.players[i].y = game->players[i]->y;
-      container.players[i].direction = game->players[i]->direction;
-      container.players[i].hp = game->players[i]->hp;
-    } else {
-      container.players[i].playing = 0;
-    }
-  }
 
-  for (i = 0; i < 4; i++)
-  {
-    if (game->players[i])
-    {
-      // maybe this should be in a while statement ...
-      send(game->players[i]->address, &container, sizeof(container), 0);
-    }
-  }
-}
+
+
+
+
 
 
 void run_game_cycle() {
@@ -88,6 +66,16 @@ void run_game_cycle() {
   // blocks
 
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
