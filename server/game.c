@@ -18,8 +18,6 @@ void free_game()
   free_players();
 }
 
-
-// width of element is always the same == 1 square.
 int player_element_colision(t_player* player, t_element* element)
 {
   t_collider player_collider;
@@ -78,7 +76,6 @@ void run_player_actions(t_player* player)
     player->y -= player->events->y;
   }
 
-
   //TODO: place bomb
   if (player->events->bomb > 0) {
     printf("PLACING BOMB at : %d - %d\n", player->x, player->y);
@@ -92,7 +89,6 @@ void run_players_actions()
 {
   int i;
 
-   // @TODO: clean this up, and check for colisions !!
   for (i = 0; i < 4; i++)
   {
     if (game->players[i])
@@ -111,6 +107,8 @@ void run_game_cycle() {
 
   // flames
 
+
+  // TODO: check if player takes damage -> damage cooldown + hp--
   run_players_actions();
 
 

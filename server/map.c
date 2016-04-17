@@ -26,11 +26,16 @@ int init_map() {
   game->bomb = NULL;
   game->flame = NULL;
 
+
+
   // we will place only a few blocks at the start, to testout collisions. (maybe a players position ?)
   createBlock(0, 0, -50);
   createBlock(0, -50, 0);
   createBlock(0, 50, 0);
   createBlock(0, 0, 50);
+
+
+
 
   return 0;
 }

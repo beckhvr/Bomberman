@@ -38,7 +38,7 @@ void add_player(int address)
 
       if ((game->players[i] = malloc(sizeof(t_player))) != NULL) {
 
-        //TODO: all of this extracted to a separat function to set details ...
+        // TODO: all of this extracted to a separat function to set details ...
         game->players[i]->address = address;
         game->players[i]->hp = 3;
         if (i < 3) {
