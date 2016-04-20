@@ -138,10 +138,10 @@ void compute_list(t_element*);
 int place_bomb(int, int, int);
 void explode_bomb(t_element*);
 int player_element_collision(t_player*, t_element*);
-int compute_player_collisions_with_list(t_player*, t_element*);
+t_element* get_player_collisions_with_list(t_player*, t_element*);
 int player_has_collisions(t_player*);
 int element_element_collision(t_element*, t_element*);
-int compute_element_collisions_with_list(t_element*, t_element*);
+t_element* get_element_collisions_with_list(t_element*, t_element*);
 void run_players_actions();
 void run_player_actions(t_player*);
 

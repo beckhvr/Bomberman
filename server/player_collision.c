@@ -16,7 +16,7 @@ int player_element_collision(t_player* player, t_element* element)
   return collision_handler(&player_collider, &element_collider);
 }
 
-int compute_player_collisions_with_list(t_player* player, t_element* list)
+t_element* get_player_collisions_with_list(t_player* player, t_element* list)
 {
   t_element* element;
 
@@ -24,20 +24,20 @@ int compute_player_collisions_with_list(t_player* player, t_element* list)
   {
     if (player_element_collision(player, element) > 0)
     {
-      return 1;
+      return element;
     }
   }
 
-  return 0;
+  return NULL;
 }
 
 int player_has_collisions(t_player* player)
 {
-  int collisions;
+  if (get_player_collisions_with_list(player, game->block) != NULL
+      || get_player_collisions_with_list(player, game->bomb) != NULL)
+  {
+    return (1);
+  }
 
-  collisions = 0;
-  collisions += compute_player_collisions_with_list(player, game->block);
-  collisions += compute_player_collisions_with_list(player, game->bomb);
-
-  return collisions;
+  return (0);
 }

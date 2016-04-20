@@ -15,7 +15,7 @@ int element_element_collision(t_element* current, t_element* element)
   return collision_handler(&c1, &c2);
 }
 
-int compute_element_collisions_with_list(t_element* current, t_element* list)
+t_element* get_element_collisions_with_list(t_element* current, t_element* list)
 {
   t_element* element;
 
@@ -23,9 +23,10 @@ int compute_element_collisions_with_list(t_element* current, t_element* list)
   {
     if (element_element_collision(current, element) > 0)
     {
-      return 1;
+      return element;
     }
   }
 
-  return 0;
+  return NULL;
 }
+

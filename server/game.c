@@ -86,15 +86,18 @@ int bomb_has_collisions(t_element* bomb)
   int i;
 
   collision = 0;
-
-  collision += compute_element_collisions_with_list(bomb, game->block);
-  collision += compute_element_collisions_with_list(bomb, game->bomb);
+  if (get_element_collisions_with_list(bomb, game->block) != NULL
+    || get_element_collisions_with_list(bomb, game->bomb) != NULL)
+  {
+    collision = 1;
+  }
 
   for (i = 0; i < 4; i++)
   {
-    if (game->players[i])
+    if (game->players[i]
+        && get_player_collisions_with_list(game->players[i], bomb) != NULL)
     {
-      collision += compute_player_collisions_with_list(game->players[i], bomb);
+      collision += 1;
     }
   }
 
