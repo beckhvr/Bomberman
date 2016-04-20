@@ -92,6 +92,7 @@ struct s_player
   t_event* events;
   int hp; // health points ... once he arrives at 0, he becomes a gost (not allowed to place bombs and can't get hurt)
   int cooldown; // is the player allowed to place bomb
+  int damage_cooldown; // is the player allowed to place bomb
 };
 
 typedef struct s_game t_game;

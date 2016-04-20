@@ -30,7 +30,12 @@ void ascii_map(char* c)
 
   if (get_nth_bit(c, 1) == 1)
   {
-    printf("-");
+    if (get_nth_bit(c, 2) == 0)
+    {
+      printf("-");
+    } else {
+      printf("~");
+    }
     return;
   }
 

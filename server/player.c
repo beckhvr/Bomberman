@@ -67,6 +67,7 @@ void add_player(int address)
         // }
         game->players[i]->direction = 3;
         game->players[i]->cooldown = 0;
+        game->players[i]->damage_cooldown = 0;
 
         // TODO: check this malloc also
         game->players[i]->events = malloc(sizeof(t_event));
@@ -134,6 +135,11 @@ void run_player_actions(t_player* player)
   {
     player->cooldown -= 1;
   }
+  if (player->damage_cooldown > 0)
+  {
+    player->damage_cooldown -= 1;
+  }
+
 
   if (player->events->bomb > 0 && player->cooldown == 0 && player->hp > 0)
   {

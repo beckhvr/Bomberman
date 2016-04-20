@@ -95,6 +95,13 @@ int init_map() {
   createBlock(0, 550, 450);
   createBlock(0, 550, 500);
 
+
+  // creating some breakable ones
+  createBlock(1, 350, 350);
+  createBlock(1, 350, 250);
+  createBlock(1, 350, 150);
+
+
   return 0;
 }
 

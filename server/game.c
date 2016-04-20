@@ -200,9 +200,41 @@ void explode_bomb(t_element* bomb)
   }
 }
 
+
+
+
+
+
+
+
 void flame_action(t_element* flame)
 {
-  // check collisions with block and player, do damage to both, and it collision, set hp to 0
+  t_element* block;
+  int i;
+
+  if ((block = get_element_collisions_with_list(flame, game->block)) != NULL)
+  {
+    if (block->type != 0)
+    {
+      block->lifespan = 0;
+    }
+    flame->lifespan = 0;
+  }
+
+  for (i = 0; i < 4; i++)
+  {
+    if (game->players[i])
+    {
+      if (player_element_collision(game->players[i], flame) > 0)
+      {
+        if (game->players[i]->hp > 0 && game->players[i]->damage_cooldown == 0)
+        {
+          game->players[i]->damage_cooldown = 10;
+          game->players[i]->hp -= 1;
+        }
+      }
+    }
+  }
 }
 
 void init_element_actions()
