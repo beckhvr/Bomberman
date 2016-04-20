@@ -1,5 +1,5 @@
 /*
-** colision.c for Bomberman in /Users/becketthover/Desktop/Bomberman/server
+** collision.c for Bomberman in /Users/becketthover/Desktop/Bomberman/server
 **
 ** Made by HOVER Beckett
 ** Login   <hover_b@etna-alternance.net>

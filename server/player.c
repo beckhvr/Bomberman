@@ -111,6 +111,18 @@ void apply_player_event(t_player* player, t_event* event)
   player->events->bomb = event->bomb;
 }
 
+void run_players_actions()
+{
+  int i;
+
+  for (i = 0; i < 4; i++)
+  {
+    if (game->players[i])
+    {
+      run_player_actions(game->players[i]);
+    }
+  }
+}
 
 void free_players()
 {

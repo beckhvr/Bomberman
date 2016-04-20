@@ -22,9 +22,14 @@ int createBlock(int type, int x, int y) {
   block->type = type;
   block->x = x;
   block->y = y;
+  block->lifespan = -1;
   block->next = game->block;
+  block->prev = NULL;
+  if (game->block)
+  {
+    game->block->prev = block;
+  }
   game->block = block;
-
   return (0);
 }
 
@@ -38,10 +43,10 @@ int init_map() {
 
 
   // we will place only a few blocks at the start, to testout collisions. (maybe a players position ?)
-  createBlock(0, 0, -50);
-  createBlock(0, -50, 0);
-  createBlock(0, 50, 0);
-  createBlock(0, 0, 50);
+  // createBlock(0, 0, -50);
+  // createBlock(0, -50, 0);
+  // createBlock(0, 50, 0);
+  // createBlock(0, 0, 50);
 
 
 

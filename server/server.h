@@ -20,7 +20,7 @@
 #include "../shared/shared.h"
 
 // // bombs are placed on the closest block in front of the player (we have the x/y of the player, and his direction)
-// // from there, we calculate the nest block, and if we can place a bomb, we do. (we can only place a bomb if there are no colisions with players, or blocks)
+// // from there, we calculate the nest block, and if we can place a bomb, we do. (we can only place a bomb if there are no collisions with players, or blocks)
 // typedef struct s_bomb t_bomb;
 // struct s_bomb
 // {
@@ -56,10 +56,15 @@
 
 
 typedef struct s_element t_element;
-struct s_element {
+struct s_element
+{
   int x;
   int y;
-  int type;
+  int type; // 0 = block, 1 = bomb, 2 = flame
+  int lifespan; // ticks it is allowed to be alive. -1 for immortal
+  int dx; // velocity per frame x
+  int dy; // velocity per frame y
+  t_element* prev;
   t_element* next;
 };
 
@@ -100,6 +105,7 @@ struct s_game
   t_element* block; // chained list of blocks
   t_element* bomb; // chained list of bombs
   t_element* flame; // chained list of flames
+  void (*element_actions[4])(t_element*); // array of pointers on functions
 };
 
 /*----(Prototypes)-----------------------------------------------------------*/
@@ -125,6 +131,19 @@ int check_top_left_collision(t_collider*, t_collider*);
 int check_top_right_collision(t_collider*, t_collider*);
 int check_bottom_left_collision(t_collider*, t_collider*);
 int check_bottom_right_collision(t_collider*, t_collider*);
+void run_game_cleanup();
+void init_element_actions();
+void clean_up_list(t_element*);
+void compute_list(t_element*);
+int place_bomb(int, int, int);
+void explode_bomb(t_element*);
+int player_element_collision(t_player*, t_element*);
+int compute_player_collisions_with_list(t_player*, t_element*);
+int player_has_collisions(t_player*);
+int element_element_collision(t_element*, t_element*);
+int compute_element_collisions_with_list(t_element*, t_element*);
+void run_players_actions();
+void run_player_actions(t_player*);
 
 
 /*----(Globals)--------------------------------------------------------------*/
