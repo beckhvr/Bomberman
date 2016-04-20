@@ -50,17 +50,23 @@ void add_player(int address)
         // TODO: all of this extracted to a separat function to set details ...
         game->players[i]->address = address;
         game->players[i]->hp = 3;
-        if (i < 3) {
-          game->players[i]->x = 2;
-        } else {
-          game->players[i]->x = 200;
-        }
-        if (((i + 1) % 2) == 1) {
-          game->players[i]->y = 2;
-        } else {
-          game->players[i]->y = 200;
-        }
+
+        // set a default start place !
+        game->players[i]->x = 300;
+        game->players[i]->y = 300;
+
+        // if (i < 3) {
+        //   game->players[i]->x = 300;
+        // } else {
+        //   game->players[i]->x = 200;
+        // }
+        // if (((i + 1) % 2) == 1) {
+        //   game->players[i]->y = 2;
+        // } else {
+        //   game->players[i]->y = 200;
+        // }
         game->players[i]->direction = 3;
+        game->players[i]->cooldown = 0;
 
         // TODO: check this malloc also
         game->players[i]->events = malloc(sizeof(t_event));
@@ -77,7 +83,7 @@ void add_player(int address)
   }
 }
 
-void formatPlayerInfo(t_container* container)
+void format_player_info(t_container* container)
 {
   int i;
 
@@ -109,6 +115,34 @@ void apply_player_event(t_player* player, t_event* event)
   player->events->y += event->y;
   player->events->direction = event->direction;
   player->events->bomb = event->bomb;
+}
+
+void run_player_actions(t_player* player)
+{
+  player->direction = player->events->direction;
+  player->x += player->events->x;
+  if (player_has_collisions(player))
+  {
+    player->x -= player->events->x;
+  }
+  player->y += player->events->y;
+  if (player_has_collisions(player))
+  {
+    player->y -= player->events->y;
+  }
+  if (player->cooldown > 0)
+  {
+    player->cooldown -= 1;
+  }
+
+  if (player->events->bomb > 0 && player->cooldown == 0 && player->hp > 0)
+  {
+    if (place_bomb(player->x + (PLAYER_SIZE/ 2), player->y + (PLAYER_SIZE/ 2), player->direction) == 1)
+    {
+      player->cooldown = 10;
+      player->events->bomb = 0;
+    }
+  }
 }
 
 void run_players_actions()

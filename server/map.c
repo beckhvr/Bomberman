@@ -42,14 +42,58 @@ int init_map() {
 
 
 
-  // we will place only a few blocks at the start, to testout collisions. (maybe a players position ?)
-  // createBlock(0, 0, -50);
-  // createBlock(0, -50, 0);
-  // createBlock(0, 50, 0);
-  // createBlock(0, 0, 50);
+  // placing sourounding blocks (unbreakable)
+  // top
+  createBlock(0, 0, 0);
+  createBlock(0, 50, 0);
+  createBlock(0, 100, 0);
+  createBlock(0, 150, 0);
+  createBlock(0, 200, 0);
+  createBlock(0, 250, 0);
+  createBlock(0, 300, 0);
+  createBlock(0, 350, 0);
+  createBlock(0, 400, 0);
+  createBlock(0, 450, 0);
+  createBlock(0, 500, 0);
+  createBlock(0, 550, 0);
 
+  // bottom
+  createBlock(0, 0, 550);
+  createBlock(0, 50, 550);
+  createBlock(0, 100, 550);
+  createBlock(0, 150, 550);
+  createBlock(0, 200, 550);
+  createBlock(0, 250, 550);
+  createBlock(0, 300, 550);
+  createBlock(0, 350, 550);
+  createBlock(0, 400, 550);
+  createBlock(0, 450, 550);
+  createBlock(0, 500, 550);
+  createBlock(0, 550, 550);
 
+  // left
+  createBlock(0, 0, 50);
+  createBlock(0, 0, 100);
+  createBlock(0, 0, 150);
+  createBlock(0, 0, 200);
+  createBlock(0, 0, 250);
+  createBlock(0, 0, 300);
+  createBlock(0, 0, 350);
+  createBlock(0, 0, 400);
+  createBlock(0, 0, 450);
+  createBlock(0, 0, 500);
 
+  // right
+  createBlock(0, 550, 50);
+  createBlock(0, 550, 100);
+  createBlock(0, 550, 150);
+  createBlock(0, 550, 200);
+  createBlock(0, 550, 250);
+  createBlock(0, 550, 300);
+  createBlock(0, 550, 350);
+  createBlock(0, 550, 400);
+  createBlock(0, 550, 450);
+  createBlock(0, 550, 500);
 
   return 0;
 }

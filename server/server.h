@@ -125,7 +125,7 @@ void free_player(t_player*);
 void apply_player_event(t_player*, t_event*);
 int init_game();
 void free_game();
-void formatPlayerInfo(t_container*);
+void format_player_info(t_container*);
 int collision_handler(t_collider*, t_collider*);
 int check_top_left_collision(t_collider*, t_collider*);
 int check_top_right_collision(t_collider*, t_collider*);

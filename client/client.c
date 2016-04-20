@@ -12,6 +12,38 @@
 
 #define MAXBUF 1024
 
+int get_nth_bit(char* c, int bit)
+{
+  return (*c >> bit) & 1;
+}
+
+
+void ascii_map(char* c)
+{
+
+  if (get_nth_bit(c, 0) == 1)
+  {
+    // this is clearly having some sort of nervous breakdown, I am no longer setting the first bit.
+    printf("F");
+    return;
+  }
+
+  if (get_nth_bit(c, 1) == 1)
+  {
+    printf("-");
+    return;
+  }
+
+  if (get_nth_bit(c, 3) == 1)
+  {
+    printf("B");
+    return;
+  }
+
+  printf(" ");
+  return;
+}
+
 int main()
 {
   int connexion_socket;
@@ -60,8 +92,6 @@ int main()
         break;
       }
 
-
-
       // 1 chance sur 20 d'envoyer un evenement.
       int tmp = rand() % 20;
       if (tmp < 10) {
@@ -99,7 +129,24 @@ int main()
           printf("player %d => x:%d y:%d facing:%d hp:%d\n", i, container.players[i].x, container.players[i].y, container.players[i].direction, container.players[i].hp);
         }
       }
+
+      // reading map
+      for (int i = 0; i < 144; i++)
+      {
+        if (i % 12 == 0) {
+          printf("\n");
+        }
+        ascii_map(&container.map[i]);
+        // this is the current block;
+        //container.map[i]
+      }
+      printf("\n");
       printf("--end--\n\n");
+
+      // this should be in client actually
+
+
+
 
 
 

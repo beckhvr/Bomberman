@@ -28,42 +28,21 @@ void free_game()
   free_players();
 }
 
-
-
-
-
-/*-----------------------------------------------------------------------------
---------(TO CHANGE)------------------------------------------------------------
------------------------------------------------------------------------------*/
-
-void run_player_actions(t_player* player)
+void run_game_cycle()
 {
-  player->direction = player->events->direction;
-  player->x += player->events->x;
-  if (player_has_collisions(player))
-  {
-    player->x -= player->events->x;
-  }
-  player->y += player->events->y;
-  if (player_has_collisions(player))
-  {
-    player->y -= player->events->y;
-  }
+  // remove blocks that need to be
+  compute_list(game->block);
+  // see if bombs need to explode. remove those that need to be
+  compute_list(game->bomb);
+  // move the flames. damages things it hits
+  compute_list(game->flame);
 
+  // TODO: check if player takes damage -> damage cooldown + hp--
+  // this should be done in the flame action ...
+  run_players_actions();
 
-  if (player->events->bomb > 0)
-  {
-    //TODO: place bomb
-    // ticks before exploding ? 120 ticks => once it arrives to 0, destroy it !
-
-    // TODO : fix algorythm (we have a problem because we are computing size from top-left corner of player !!)
-    place_bomb(player->x + (PLAYER_SIZE/ 2), player->y + (PLAYER_SIZE/ 2), player->direction);
-
-    player->events->bomb = 0;
-  }
+  run_game_cleanup();
 }
-
-
 
 int get_left_range(int point, int increments)
 {
@@ -156,29 +135,6 @@ int place_bomb(int x, int y, int direction)
 }
 
 
-
-
-
-
-/*-----------------------------------------------------------------------------
---------(REWORK)---------------------------------------------------------------
------------------------------------------------------------------------------*/
-void run_game_cycle()
-{
-  // remove blocks that need to be
-  compute_list(game->block);
-  // see if bombs need to explode. remove those that need to be
-  compute_list(game->bomb);
-  // move the flames. damages things it hits
-  compute_list(game->flame);
-
-  // TODO: check if player takes damage -> damage cooldown + hp--
-  // this should be done in the flame action ...
-  run_players_actions();
-
-  run_game_cleanup();
-}
-
 void set_flame_movement(t_element* flame, int direction)
 {
   flame->dx = 0;
@@ -261,10 +217,11 @@ void init_element_actions()
 
 void element_movements(t_element* element)
 {
-  if (element->type == 3)
+  // only move every 5 frames ...
+  if (element->lifespan % 5 == 0 && element->type == 3)
   {
-    element->x += element->dx;
-    element->y += element->dy;
+    element->x += element->dx * ELEMENT_SIZE;
+    element->y += element->dy * ELEMENT_SIZE;
   }
 }
 
@@ -345,33 +302,11 @@ void clean_up_list(t_element* list)
     {
       set_first_element_of_game_list(runner);
     }
-
-
-
     to_free = runner;
     runner = runner->next;
-
-    printf("before free : type = %d\n", to_free->type);
-
     free(to_free);
-
-    printf("after free\n");
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void game_loop()
 {
