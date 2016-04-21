@@ -268,9 +268,21 @@ int init_game(char* address, int port)
 
 int translate_key(int key)
 {
-  if (key > 1073741902 && key < 10737419036)
+  if (key == SDLK_DOWN)
   {
-    return key - 1073741903;
+    return 2;
+  }
+  else if (key == SDLK_UP)
+  {
+    return 3;
+  }
+  else if (key == SDLK_LEFT)
+  {
+    return 1;
+  }
+  else if (key == SDLK_RIGHT)
+  {
+    return 0;
   }
   else if (key == 32)
   {
