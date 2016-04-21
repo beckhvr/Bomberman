@@ -455,9 +455,20 @@ void end_game()
   g_game->running = 0;
 }
 
-int main()
+int main(int argc, char** argv)
 {
-  if (init_game("127.0.0.1", 3334) < 0)
+  char address[20];
+
+  if (argc < 2)
+  {
+    strcpy(address, "127.0.0.1");
+  }
+  else
+  {
+    strcpy(address, argv[1]);
+  }
+
+  if (init_game(address, 3334) < 0)
   {
     return (-1);
   }
