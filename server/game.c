@@ -54,7 +54,7 @@ int get_left_range(int point, int increments)
     i++;
   }
 
-  return i * increments;
+  return (i - 1) * increments;
 }
 
 void set_bomb_coordinates(t_element* bomb, int x, int y, int direction)
@@ -62,15 +62,15 @@ void set_bomb_coordinates(t_element* bomb, int x, int y, int direction)
   bomb->x = get_left_range(x, ELEMENT_SIZE);
   bomb->y = get_left_range(y, ELEMENT_SIZE);
 
-  if (direction == 1)
+  if (direction == 0)
   {
     bomb->y -= ELEMENT_SIZE;
   }
-  else if (direction == 2)
+  else if (direction == 1)
   {
     bomb->x += ELEMENT_SIZE;
   }
-  else if (direction == 3)
+  else if (direction == 2)
   {
     bomb->y += ELEMENT_SIZE;
   }

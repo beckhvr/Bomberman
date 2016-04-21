@@ -51,20 +51,17 @@ void add_player(int address)
         game->players[i]->address = address;
         game->players[i]->hp = 3;
 
-        // set a default start place !
-        game->players[i]->x = 300;
-        game->players[i]->y = 300;
+        if (i < 2) {
+          game->players[i]->y = 52;
+        } else {
+          game->players[i]->y = 552;
+        }
+        if (((i + 1) % 2) == 1) {
+          game->players[i]->x = 52;
+        } else {
+          game->players[i]->x = 552;
+        }
 
-        // if (i < 3) {
-        //   game->players[i]->x = 300;
-        // } else {
-        //   game->players[i]->x = 200;
-        // }
-        // if (((i + 1) % 2) == 1) {
-        //   game->players[i]->y = 2;
-        // } else {
-        //   game->players[i]->y = 200;
-        // }
         game->players[i]->direction = 2;
         game->players[i]->cooldown = 0;
         game->players[i]->damage_cooldown = 0;
@@ -144,7 +141,10 @@ void run_player_actions(t_player* player)
 
   if (player->events->bomb > 0 && player->cooldown == 0 && player->hp > 0)
   {
-    if (place_bomb(player->x + (PLAYER_SIZE/ 2), player->y + (PLAYER_SIZE/ 2), player->direction) == 1)
+
+    // TODO : probably better this algo.
+
+    if (place_bomb(player->x + (PLAYER_SIZE / 2), player->y + (PLAYER_SIZE / 2), player->direction) == 1)
     {
       player->cooldown = 100;
       player->events->bomb = 0;

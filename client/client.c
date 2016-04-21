@@ -243,7 +243,7 @@ int init_game(char* address, int port)
     return (-1);
   }
 
-  g_game->window = SDL_CreateWindow("Bomberman", 0, 0, 600, 600, 0);
+  g_game->window = SDL_CreateWindow("Bomberman", 0, 0, 650, 650, 0);
   g_game->renderer = SDL_CreateRenderer(g_game->window, -1, 0);
   g_game->running = 1;
   g_game->timer = SDL_GetTicks();
@@ -352,8 +352,8 @@ void render_tile(int position, int type, int direction)
   SDL_Rect rec;
   SDL_Rect crop;
 
-  rec.x = (position % 12) * ELEMENT_SIZE;
-  rec.y = (position / 12) * ELEMENT_SIZE;
+  rec.x = (position % 13) * ELEMENT_SIZE;
+  rec.y = (position / 13) * ELEMENT_SIZE;
   rec.w = ELEMENT_SIZE;
   rec.h = ELEMENT_SIZE;
 
@@ -395,7 +395,7 @@ void render_map(char* map)
 {
   int i;
 
-  for (i = 0; i < 144; i++)
+  for (i = 0; i < 169; i++)
   {
     render_block(&map[i], i);
     if (get_nth_bit(&map[i], 3) == 1)

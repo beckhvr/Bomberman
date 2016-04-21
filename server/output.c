@@ -24,8 +24,8 @@ int position_collides_with_list(int position, t_element* list)
 {
   t_element element;
 
-  element.x = (position % 12) * ELEMENT_SIZE;
-  element.y = (position / 12) * ELEMENT_SIZE;
+  element.x = (position % 13) * ELEMENT_SIZE;
+  element.y = (position / 13) * ELEMENT_SIZE;
 
   if (get_element_collisions_with_list(&element, list) != NULL)
   {
@@ -40,8 +40,8 @@ void set_block_on_position(char* c, int position)
   t_element element;
   t_element* block;
 
-  element.x = (position % 12) * ELEMENT_SIZE;
-  element.y = (position / 12) * ELEMENT_SIZE;
+  element.x = (position % 13) * ELEMENT_SIZE;
+  element.y = (position / 13) * ELEMENT_SIZE;
 
   if ((block = get_element_collisions_with_list(&element, game->block)) == NULL)
   {
@@ -78,7 +78,7 @@ void sendDataToPlayers()
   bzero(&container.map, sizeof(container.map));
 
   // prepare map data
-  for (i = 0; i < 144; i++)
+  for (i = 0; i < 169; i++)
   {
     // each char is one block of the map
     container.map[i] = '0';
