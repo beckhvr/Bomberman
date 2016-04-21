@@ -28,63 +28,10 @@ struct s_game {
 
 t_game* g_game;
 
-
-
 int get_nth_bit(char* c, int bit)
 {
   return (*c >> bit) & 1;
 }
-
-
-
-
-
-
-
-
-// void ascii_map(char* c)
-// {
-
-//   if (get_nth_bit(c, 0) == 1)
-//   {
-//     // this is clearly having some sort of nervous breakdown, I am no longer setting the first bit.
-//     printf("F");
-//     return;
-//   }
-
-//   if (get_nth_bit(c, 1) == 1)
-//   {
-//     if (get_nth_bit(c, 2) == 0)
-//     {
-//       printf("-");
-//     } else {
-//       printf("~");
-//     }
-//     return;
-//   }
-
-//   if (get_nth_bit(c, 3) == 1)
-//   {
-//     printf("B");
-//     return;
-//   }
-
-//   printf(" ");
-//   return;
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 int connect_to_server(char* address, int port)
 {
@@ -497,7 +444,6 @@ void run_game()
     render_map(container.map);
     render_players(container.players);
     SDL_RenderPresent(g_game->renderer);
-
   }
 }
 

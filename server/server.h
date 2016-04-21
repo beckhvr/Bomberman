@@ -134,7 +134,7 @@ int check_bottom_left_collision(t_collider*, t_collider*);
 int check_bottom_right_collision(t_collider*, t_collider*);
 void run_game_cleanup();
 void init_element_actions();
-void clean_up_list(t_element*);
+void clean_up_list(t_element**);
 void compute_list(t_element*);
 int place_bomb(int, int, int);
 void explode_bomb(t_element*);

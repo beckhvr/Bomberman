@@ -104,6 +104,21 @@ int bomb_has_collisions(t_element* bomb)
   return collision;
 }
 
+void add_element_to_list(t_element** list, t_element* element) {
+  t_element* first_element;
+
+  first_element = *list;
+  element->prev = NULL;
+  if (first_element != NULL)
+  {
+    element->next = first_element;
+    first_element->prev = element;
+  }
+  else
+    element->next = NULL;
+  *list = element;
+}
+
 int place_bomb(int x, int y, int direction)
 {
   t_element* bomb;
@@ -112,20 +127,13 @@ int place_bomb(int x, int y, int direction)
   {
     set_bomb_coordinates(bomb, x, y, direction);
     bomb->type = 2;
-    bomb->lifespan = 10;
+    bomb->lifespan = 60;
     bomb->dx = 0;
     bomb->dy = 0;
-    bomb->prev = NULL;
 
     if (bomb_has_collisions(bomb) == 0)
     {
-      printf("PLACING BOMB at : %d - %d\n", bomb->x, bomb->y);
-      bomb->next = game->bomb;
-      if (game->bomb)
-      {
-        game->bomb->prev = bomb;
-      }
-      game->bomb = bomb;
+      add_element_to_list(&game->bomb, bomb);
       return (1);
     }
     else
@@ -133,7 +141,6 @@ int place_bomb(int x, int y, int direction)
       free(bomb);
     }
   }
-
   return (0);
 }
 
@@ -171,14 +178,8 @@ void create_flame(int x, int y, int direction)
     flame->y = y;
     flame->type = 3;
     set_flame_movement(flame, direction);
-    flame->lifespan = 10;
-    flame->prev = NULL;
-    flame->next = game->flame;
-    if (game->flame)
-    {
-      game->flame->prev = flame;
-    }
-    game->flame = flame;
+    flame->lifespan = 30;
+    add_element_to_list(&game->flame, flame);
   }
 }
 
@@ -229,7 +230,7 @@ void flame_action(t_element* flame)
       {
         if (game->players[i]->hp > 0 && game->players[i]->damage_cooldown == 0)
         {
-          game->players[i]->damage_cooldown = 10;
+          game->players[i]->damage_cooldown = 40;
           game->players[i]->hp -= 1;
         }
       }
@@ -253,7 +254,7 @@ void init_element_actions()
 void element_movements(t_element* element)
 {
   // only move every 5 frames ...
-  if (element->lifespan % 5 == 0 && element->type == 3)
+  if (element->lifespan % 15 == 0 && element->type == 3)
   {
     element->x += element->dx * ELEMENT_SIZE;
     element->y += element->dy * ELEMENT_SIZE;
@@ -306,40 +307,49 @@ void set_first_element_of_game_list(t_element* element)
 
 void run_game_cleanup()
 {
-  clean_up_list(game->block);
-  clean_up_list(game->bomb);
-  clean_up_list(game->flame);
+  clean_up_list(&game->block);
+  clean_up_list(&game->bomb);
+  clean_up_list(&game->flame);
 }
 
-void clean_up_list(t_element* list)
+void remove_element(t_element** list, t_element* element) {
+  if (element->prev != NULL)
+  {
+    element->prev->next = element->next;
+    if (element->next != NULL)
+    {
+      element->next->prev = element->prev;
+    }
+  }
+  else
+  {
+    if (element->next != NULL)
+    {
+      element->next->prev = NULL;
+    }
+    *list = element->next;
+  }
+  free(element);
+}
+
+
+
+
+
+void clean_up_list(t_element** list)
 {
   t_element* runner;
-  t_element* to_free;
+  t_element* next;
 
-  runner = list;
-  while (runner)
+  runner = *list;
+  while (runner != NULL)
   {
-    if (runner->lifespan != 0)
+    next = runner->next;
+    if (runner->lifespan == 0)
     {
-      runner = runner->next;
-      continue;
+      remove_element(list, runner);
     }
-
-    if (runner->prev)
-    {
-      runner->prev->next = runner->next;
-    }
-    if (runner->next)
-    {
-      runner->next->prev = runner->prev;
-    }
-    else
-    {
-      set_first_element_of_game_list(runner);
-    }
-    to_free = runner;
-    runner = runner->next;
-    free(to_free);
+    runner = next;
   }
 }
 

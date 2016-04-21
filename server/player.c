@@ -65,7 +65,7 @@ void add_player(int address)
         // } else {
         //   game->players[i]->y = 200;
         // }
-        game->players[i]->direction = 3;
+        game->players[i]->direction = 2;
         game->players[i]->cooldown = 0;
         game->players[i]->damage_cooldown = 0;
 
@@ -73,7 +73,7 @@ void add_player(int address)
         game->players[i]->events = malloc(sizeof(t_event));
         game->players[i]->events->x = 0;
         game->players[i]->events->y = 0;
-        game->players[i]->events->direction = 3;
+        game->players[i]->events->direction = 2;
         game->players[i]->events->bomb = 0;
       } else {
         close(address);
@@ -122,6 +122,7 @@ void run_player_actions(t_player* player)
 {
   player->direction = player->events->direction;
   player->x += player->events->x;
+
   if (player_has_collisions(player))
   {
     player->x -= player->events->x;
@@ -131,6 +132,7 @@ void run_player_actions(t_player* player)
   {
     player->y -= player->events->y;
   }
+
   if (player->cooldown > 0)
   {
     player->cooldown -= 1;
@@ -140,12 +142,11 @@ void run_player_actions(t_player* player)
     player->damage_cooldown -= 1;
   }
 
-
   if (player->events->bomb > 0 && player->cooldown == 0 && player->hp > 0)
   {
     if (place_bomb(player->x + (PLAYER_SIZE/ 2), player->y + (PLAYER_SIZE/ 2), player->direction) == 1)
     {
-      player->cooldown = 10;
+      player->cooldown = 100;
       player->events->bomb = 0;
     }
   }
