@@ -226,15 +226,6 @@ int init_map() {
   createBlock(1, 300, 550);
   createBlock(1, 400, 550);
 
-
-
-
-
-
-
-
-
-
   return 0;
 }
 

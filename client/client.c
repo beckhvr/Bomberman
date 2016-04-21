@@ -330,10 +330,13 @@ void crop_texture(SDL_Rect* crop, int type, int offset)
   crop->w = 50;
   crop->h = 50;
 
+  if (type > 2)
+  {
+    crop->y = 50 * (i);
+  }
   if (type > 9)
   {
     crop->x = 50 * offset;
-    crop->y = 50 * (i);
   }
 }
 

@@ -30,17 +30,10 @@ void free_game()
 
 void run_game_cycle()
 {
-  // remove blocks that need to be
   compute_list(game->block);
-  // see if bombs need to explode. remove those that need to be
   compute_list(game->bomb);
-  // move the flames. damages things it hits
   compute_list(game->flame);
-
-  // TODO: check if player takes damage -> damage cooldown + hp--
-  // this should be done in the flame action ...
   run_players_actions();
-
   run_game_cleanup();
 }
 
