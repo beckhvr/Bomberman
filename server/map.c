@@ -130,9 +130,101 @@ int init_map() {
 
 
   // creating some breakable ones
-  createBlock(1, 350, 350);
-  createBlock(1, 350, 250);
+
+  createBlock(1, 50, 200);
+  createBlock(1, 50, 300);
+  createBlock(1, 50, 400);
+
+  createBlock(1, 150, 50);
+  createBlock(1, 150, 100);
+  createBlock(1, 150, 150);
+  createBlock(1, 150, 200);
+  createBlock(1, 150, 250);
+  createBlock(1, 150, 300);
+  createBlock(1, 150, 350);
+  createBlock(1, 150, 400);
+  createBlock(1, 150, 450);
+  createBlock(1, 150, 500);
+  createBlock(1, 150, 550);
+
+  createBlock(1, 250, 50);
+  createBlock(1, 250, 100);
+  createBlock(1, 250, 150);
+  createBlock(1, 250, 200);
+  createBlock(1, 250, 250);
+  createBlock(1, 250, 300);
+  createBlock(1, 250, 350);
+  createBlock(1, 250, 400);
+  createBlock(1, 250, 450);
+  createBlock(1, 250, 500);
+  createBlock(1, 250, 550);
+
+  createBlock(1, 350, 50);
+  createBlock(1, 350, 100);
   createBlock(1, 350, 150);
+  createBlock(1, 350, 200);
+  createBlock(1, 350, 250);
+  createBlock(1, 350, 300);
+  createBlock(1, 350, 350);
+  createBlock(1, 350, 400);
+  createBlock(1, 350, 450);
+  createBlock(1, 350, 500);
+  createBlock(1, 350, 550);
+
+  createBlock(1, 450, 50);
+  createBlock(1, 450, 100);
+  createBlock(1, 450, 150);
+  createBlock(1, 450, 200);
+  createBlock(1, 450, 250);
+  createBlock(1, 450, 300);
+  createBlock(1, 450, 350);
+  createBlock(1, 450, 400);
+  createBlock(1, 450, 450);
+  createBlock(1, 450, 500);
+  createBlock(1, 450, 550);
+
+  createBlock(1, 550, 200);
+  createBlock(1, 550, 300);
+  createBlock(1, 550, 400);
+
+  createBlock(1, 200, 50);
+  createBlock(1, 300, 50);
+  createBlock(1, 400, 50);
+
+  createBlock(1, 50, 150);
+  createBlock(1, 100, 150);
+  createBlock(1, 200, 150);
+  createBlock(1, 300, 150);
+  createBlock(1, 400, 150);
+  createBlock(1, 500, 150);
+
+  createBlock(1, 50, 250);
+  createBlock(1, 100, 250);
+  createBlock(1, 200, 250);
+  createBlock(1, 300, 250);
+  createBlock(1, 400, 250);
+  createBlock(1, 500, 250);
+  createBlock(1, 550, 250);
+
+  createBlock(1, 50, 350);
+  createBlock(1, 100, 350);
+  createBlock(1, 200, 350);
+  createBlock(1, 300, 350);
+  createBlock(1, 400, 350);
+  createBlock(1, 500, 350);
+  createBlock(1, 550, 350);
+
+  createBlock(1, 50, 450);
+  createBlock(1, 100, 450);
+  createBlock(1, 200, 450);
+  createBlock(1, 300, 450);
+  createBlock(1, 400, 450);
+  createBlock(1, 500, 450);
+  createBlock(1, 550, 450);
+
+  createBlock(1, 200, 550);
+  createBlock(1, 300, 550);
+  createBlock(1, 400, 550);
 
 
 

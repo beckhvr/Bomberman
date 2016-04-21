@@ -418,7 +418,7 @@ void render_players(t_player_info players[4])
 
   for (i = 0; i < 4; i++)
   {
-    if (players[i].playing == 1)
+    if (players[i].playing == 1 && players[i].hp > 0)
     {
       render_player(i + 10, players[i].x, players[i].y, players[i].direction);
     }

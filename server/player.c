@@ -117,17 +117,19 @@ void apply_player_event(t_player* player, t_event* event)
 
 void run_player_actions(t_player* player)
 {
-  player->direction = player->events->direction;
-  player->x += player->events->x;
+  int factor;
 
+  factor = 2; // speeding up the movement a bit
+  player->direction = player->events->direction;
+  player->x += player->events->x * factor;
   if (player_has_collisions(player))
   {
-    player->x -= player->events->x;
+    player->x -= player->events->x * factor;
   }
-  player->y += player->events->y;
+  player->y += player->events->y * factor;
   if (player_has_collisions(player))
   {
-    player->y -= player->events->y;
+    player->y -= player->events->y * factor;
   }
 
   if (player->cooldown > 0)
