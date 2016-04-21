@@ -112,8 +112,8 @@ void free_player(t_player* player)
 
 void apply_player_event(t_player* player, t_event* event)
 {
-  player->events->x += event->x;
-  player->events->y += event->y;
+  player->events->x = event->x;
+  player->events->y = event->y;
   player->events->direction = event->direction;
   player->events->bomb = event->bomb;
 }

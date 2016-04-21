@@ -371,6 +371,6 @@ void game_loop()
     sendDataToPlayers();
 
     // we have a little wait period, for the moment it is 1 second
-    usleep(160000);
+    usleep(16000);
   }
 }

@@ -7,6 +7,9 @@ SERVER_OBJS = $(SERVER_SRCS:.c=.o)
 CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
 CC = gcc
 RM = rm -f
+# CFLAGS	=	-ansi -pedantic -W -Wall -Werror `sdl2-config --cflags`
+CFLAGS	=	`sdl2-config --cflags`
+LDFLAGS	=	`sdl2-config --libs` -lSDL2_image
 
 all : server client
 
@@ -14,10 +17,10 @@ dir:
 	mkdir -p $(BUILDS)
 
 server : $(SERVER_OBJS) dir
-	$(CC) $(SERVER_OBJS) -o $(BUILDS)/$(SERVER)
+	$(CC) $(CFLAGS) $(SERVER_OBJS) -o $(BUILDS)/$(SERVER)
 
 client : $(CLIENT_OBJS) dir
-	$(CC) $(CLIENT_OBJS) -o $(BUILDS)/$(CLIENT)
+	$(CC) $(CFLAGS) $(CLIENT_OBJS) -o $(BUILDS)/$(CLIENT) $(LDFLAGS)
 
 clean :
 	$(RM) $(SERVER_OBJS) $(CLIENT_OBJS)
