@@ -65,8 +65,13 @@ void add_player(int address)
         game->players[i]->cooldown = 0;
         game->players[i]->damage_cooldown = 0;
 
-        // TODO: check this malloc also
-        game->players[i]->events = malloc(sizeof(t_event));
+        if ((game->players[i]->events = malloc(sizeof(t_event))) == NULL)
+        {
+          free(game->players[i]);
+          game->players[i] = NULL;
+          close(address);
+          return;
+        }
         game->players[i]->events->x = 0;
         game->players[i]->events->y = 0;
         game->players[i]->events->direction = 2;
@@ -119,15 +124,22 @@ void run_player_actions(t_player* player)
 
   factor = 2; // speeding up the movement a bit
   player->direction = player->events->direction;
-  player->x += player->events->x * factor;
-  if (player_has_collisions(player))
+
+  if (player->events->x != 0)
   {
-    player->x -= player->events->x * factor;
+    player->x += player->events->x * factor;
+    if (player_has_collisions(player))
+    {
+      player->x -= player->events->x * factor;
+    }
   }
-  player->y += player->events->y * factor;
-  if (player_has_collisions(player))
+  if (player->events->y != 0)
   {
-    player->y -= player->events->y * factor;
+    player->y += player->events->y * factor;
+    if (player_has_collisions(player))
+    {
+      player->y -= player->events->y * factor;
+    }
   }
 
   if (player->cooldown > 0)
