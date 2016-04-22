@@ -23,7 +23,7 @@ struct s_game {
   int running;
   SDL_Texture* textures[54];
   t_event player_event;
-  int (*action_list[5])(int);
+  int (*action_list[6])(int);
 };
 
 t_game* g_game;
@@ -213,7 +213,7 @@ void init_actions()
 {
   int i;
 
-  for (i = 0; i < 5; i++)
+  for (i = 0; i < 6; i++)
   {
     g_game->action_list[i] = NULL;
   }
@@ -295,8 +295,7 @@ int translate_key(int key)
 int toggle_player_action(int key, int value)
 {
   key = translate_key(key);
-  // always return old value
-  if (g_game->action_list[key] && g_game->action_list[key](value) == 1)
+  if (g_game->action_list[key] != NULL && g_game->action_list[key](value) == 1)
   {
     return (1);
   }
