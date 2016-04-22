@@ -67,6 +67,7 @@ int place_bomb(int x, int y, int direction)
     bomb->lifespan = 60;
     bomb->dx = 0;
     bomb->dy = 0;
+    bomb->next = NULL;
 
     if (bomb_has_collisions(bomb) == 0)
     {
