@@ -9,16 +9,10 @@
 */
 #include "server.h"
 
-
-
-
 void set_nth_bit(char* c, int bit, int value)
 {
   *c |= value << bit;
 }
-
-
-
 
 int position_collides_with_list(int position, t_element* list)
 {

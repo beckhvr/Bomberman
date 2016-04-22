@@ -1,3 +1,12 @@
+/*
+** player_collision.c for Bomberman in /Users/becketthover/Desktop/Bomberman
+**
+** Made by HOVER Beckett
+** Login   <hover_b@etna-alternance.net>
+**
+** Started on  Fri Apr 22 07:44:24 2016 HOVER Beckett
+** Last update Fri Apr 22 07:44:30 2016 HOVER Beckett
+*/
 #include "server.h"
 
 int player_element_collision(t_player* player, t_element* element)

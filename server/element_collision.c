@@ -1,3 +1,12 @@
+/*
+** element_collision.c for Bomberman in /Users/becketthover/Desktop/Bomberman/server
+**
+** Made by HOVER Beckett
+** Login   <hover_b@etna-alternance.net>
+**
+** Started on  Fri Apr 22 07:09:40 2016 HOVER Beckett
+** Last update Fri Apr 22 07:09:45 2016 HOVER Beckett
+*/
 #include "server.h"
 
 int element_element_collision(t_element* current, t_element* element)
@@ -29,4 +38,3 @@ t_element* get_element_collisions_with_list(t_element* current, t_element* list)
 
   return NULL;
 }
-

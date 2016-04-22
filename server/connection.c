@@ -13,25 +13,22 @@
 int create_connection_socket(int port)
 {
   int connection_socket;
-  struct sockaddr_in socket_in;
+  struct sockaddr_in sock;
   char yes;
 
   if ((connection_socket = socket(PF_INET, SOCK_STREAM, 0)) < 0)
     return (-1);
-
-  memset(&socket_in, 0, sizeof socket_in);
-  socket_in.sin_family = AF_INET;
-  socket_in.sin_port = htons(port);
-  socket_in.sin_addr.s_addr = INADDR_ANY;
+  memset(&sock, 0, sizeof sock);
+  sock.sin_family = AF_INET;
+  sock.sin_port = htons(port);
+  sock.sin_addr.s_addr = INADDR_ANY;
   yes = '1';
   setsockopt(connection_socket, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
-
-  if ((bind(connection_socket, (struct sockaddr*)&socket_in, sizeof(socket_in))) != 0)
+  if ((bind(connection_socket, (struct sockaddr*)&sock, sizeof(sock))) != 0)
   {
     close(connection_socket);
     return (-1);
   }
-
   if ((listen(connection_socket, 4)) != 0)
   {
     close(connection_socket);
@@ -42,7 +39,8 @@ int create_connection_socket(int port)
 }
 
 // returns max file listener
-int init_file_listener() {
+int init_file_listener()
+{
   int max;
   int i;
 
@@ -65,27 +63,21 @@ int init_file_listener() {
   return max;
 }
 
-void accept_new_connection() {
+void accept_new_connection()
+{
   struct sockaddr_in socket_in;
-  int addrlen = sizeof(socket_in);
+  int len = sizeof(socket_in);
   int new_socket;
 
-  if ((new_socket = accept(game->connection_socket, (struct sockaddr *)&socket_in, (socklen_t*)&addrlen)) < 0)
+  if ((new_socket = accept(
+    game->connection_socket, (struct sockaddr *)&socket_in, (socklen_t*)&len))
+     < 0)
   {
     return;
   }
 
-  //inform user of socket number - used in send and receive commands
-  printf("New connection , socket fd is %d , ip is : %s , port : %d \n" , new_socket, inet_ntoa(socket_in.sin_addr), ntohs(socket_in.sin_port));
-
-
   if (get_player_count() < 4)
-  {
     add_player(new_socket);
-  }
   else
-  {
-    printf("let's tell them to fuckoff ... \n");
     close(new_socket);
-  }
 }

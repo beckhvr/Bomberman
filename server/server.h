@@ -19,51 +19,15 @@
 
 #include "../shared/shared.h"
 
-// // bombs are placed on the closest block in front of the player (we have the x/y of the player, and his direction)
-// // from there, we calculate the nest block, and if we can place a bomb, we do. (we can only place a bomb if there are no collisions with players, or blocks)
-// typedef struct s_bomb t_bomb;
-// struct s_bomb
-// {
-//   int x;
-//   int y;
-//   int duration; // this will be the time it has lived. after 3 seconds, it explodes and creates four flames
-// };
-
-// // bomb to flame
-// // x + 1, y, direction 2
-// // x - 1, y, direction 4
-// // x, y + 1, direction 3
-// // x, y - 1, direction 1
-// typedef struct s_flame t_flame;
-// struct s_flame
-// {
-//   int x;
-//   int y;
-//   int direction; // 1,2,3,4 respectivly up,right,down,left
-// };
-// // a flame dies once it hits something, but it damages it.
-
-// typedef struct s_block t_block;
-// struct s_block
-// {
-//   int x;
-//   int y;
-//   int type;
-//   t_block* next;
-// };
-
-
-
-
 typedef struct s_element t_element;
 struct s_element
 {
   int x;
   int y;
-  int type; // 0 = block, 1 = bomb, 2 = flame
-  int lifespan; // ticks it is allowed to be alive. -1 for immortal
-  int dx; // velocity per frame x
-  int dy; // velocity per frame y
+  int type;
+  int lifespan;
+  int dx;
+  int dy;
   t_element* prev;
   t_element* next;
 };
@@ -75,24 +39,17 @@ struct s_collider {
   int s;
 };
 
-
-
-
-
-
-
-
 typedef struct s_player t_player;
 struct s_player
 {
-  int address; // socket address
+  int address;
   int x;
   int y;
-  int direction; // which way is the player faced
+  int direction;
   t_event* events;
-  int hp; // health points ... once he arrives at 0, he becomes a gost (not allowed to place bombs and can't get hurt)
-  int cooldown; // is the player allowed to place bomb
-  int damage_cooldown; // is the player allowed to place bomb
+  int hp;
+  int cooldown;
+  int damage_cooldown;
 };
 
 typedef struct s_game t_game;
@@ -103,53 +60,67 @@ struct s_game
   int max_socket_address;
   int isRunning;
   t_player* players[4];
-  t_element* block; // chained list of blocks
-  t_element* bomb; // chained list of bombs
-  t_element* flame; // chained list of flames
-  void (*element_actions[4])(t_element*); // array of pointers on functions
+  t_element* block;
+  t_element* bomb;
+  t_element* flame;
+  void (*element_actions[4])(t_element*);
 };
 
 /*----(Prototypes)-----------------------------------------------------------*/
-int create_connection_socket(int);
-int init_file_listener();
-void handle_received_event();
-void sendDataToPlayers();
-void game_loop();
-int init_map();
-void free_map();
-void init_players();
-void free_players();
-int get_player_count();
-void accept_new_connection();
-void add_player(int);
-void free_player(t_player*);
-void apply_player_event(t_player*, t_event*);
-int init_game();
-void free_game();
-void format_player_info(t_container*);
+void init_element_actions();
+void element_movements(t_element*);
+void run_players_actions();
+void set_bomb_coordinates(t_element*, int, int, int);
+int bomb_has_collisions(t_element*);
+int place_bomb(int, int, int);
+void bomb_action(t_element*);
+void explode_bomb(t_element*);
 int collision_handler(t_collider*, t_collider*);
 int check_top_left_collision(t_collider*, t_collider*);
 int check_top_right_collision(t_collider*, t_collider*);
 int check_bottom_left_collision(t_collider*, t_collider*);
 int check_bottom_right_collision(t_collider*, t_collider*);
+int create_connection_socket(int);
+int init_file_listener();
+void accept_new_connection();
+int element_element_collision(t_element*, t_element*);
+t_element* get_element_collisions_with_list(t_element*, t_element*);
+void handle_player_event();
+void handle_received_event();
+void set_flame_movement(t_element*, int);
+void create_flame(int, int, int);
+void flame_action(t_element*);
+int init_game();
+void free_game();
+void run_game_cycle();
 void run_game_cleanup();
-void init_element_actions();
-void clean_up_list(t_element**);
+void game_loop();
+void add_element_to_list(t_element**, t_element*);
 void compute_list(t_element*);
-int place_bomb(int, int, int);
-void explode_bomb(t_element*);
+void set_first_element_of_game_list(t_element*);
+void remove_element(t_element**, t_element*);
+void clean_up_list(t_element**);
+int create_block(int, int, int);
+int init_map();
+void free_elements(t_element*);
+void free_map();
+void set_nth_bit(char*, int, int);
+int position_collides_with_list(int, t_element*);
+void set_block_on_position(char*, int);
+void set_map_block_meta(char*, int);
+void sendDataToPlayers();
+int get_left_range(int, int);
+void init_players();
+int get_player_count();
+void add_player(int);
+void format_player_info(t_container*);
+void free_player(t_player*);
+void apply_player_event(t_player*, t_event*);
+void run_player_actions(t_player*);
+void free_players();
 int player_element_collision(t_player*, t_element*);
 t_element* get_player_collisions_with_list(t_player*, t_element*);
 int player_has_collisions(t_player*);
-int element_element_collision(t_element*, t_element*);
-t_element* get_element_collisions_with_list(t_element*, t_element*);
-void run_players_actions();
-void run_player_actions(t_player*);
-
 
 /*----(Globals)--------------------------------------------------------------*/
 t_game* game;
-
-
-
-

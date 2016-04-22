@@ -35,7 +35,6 @@ int get_player_count()
   return count;
 }
 
-
 void add_player(int address)
 {
   int i;
@@ -99,7 +98,6 @@ void format_player_info(t_container* container)
   }
 }
 
-
 void free_player(t_player* player)
 {
   close(player->address);
@@ -143,26 +141,10 @@ void run_player_actions(t_player* player)
 
   if (player->events->bomb > 0 && player->cooldown == 0 && player->hp > 0)
   {
-
-    // TODO : probably better this algo.
-
     if (place_bomb(player->x + (PLAYER_SIZE / 2), player->y + (PLAYER_SIZE / 2), player->direction) == 1)
     {
       player->cooldown = 100;
       player->events->bomb = 0;
-    }
-  }
-}
-
-void run_players_actions()
-{
-  int i;
-
-  for (i = 0; i < 4; i++)
-  {
-    if (game->players[i])
-    {
-      run_player_actions(game->players[i]);
     }
   }
 }
