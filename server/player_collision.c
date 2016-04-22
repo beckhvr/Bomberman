@@ -11,12 +11,17 @@
 
 int player_element_collision(t_player* player, t_element* element)
 {
+  if (player->hp == 0)
+  {
+    return (0);
+  }
+
   t_collider player_collider;
   t_collider element_collider;
 
   player_collider.x = player->x;
   player_collider.y = player->y;
-  player_collider.s = PLAYER_SIZE;
+  player_collider.s = PLAYER_HITBOX_SIZE;
 
   element_collider.x = element->x;
   element_collider.y = element->y;

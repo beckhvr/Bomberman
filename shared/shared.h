@@ -1,4 +1,5 @@
 #define ELEMENT_SIZE 50
+#define PLAYER_HITBOX_SIZE 30
 #define PLAYER_SIZE 40
 
 typedef struct s_player_info

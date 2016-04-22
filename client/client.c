@@ -381,8 +381,8 @@ void render_player(int type, int x, int y, int direction)
   SDL_Rect rec;
   SDL_Rect crop;
 
-  rec.x = x;
-  rec.y = y;
+  rec.x = x - 5;
+  rec.y = y - 5;
   rec.w = PLAYER_SIZE;
   rec.h = PLAYER_SIZE;
 

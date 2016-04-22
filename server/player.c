@@ -141,9 +141,9 @@ void run_player_actions(t_player* player)
 
   if (player->events->bomb > 0 && player->cooldown == 0 && player->hp > 0)
   {
-    if (place_bomb(player->x + (PLAYER_SIZE / 2), player->y + (PLAYER_SIZE / 2), player->direction) == 1)
+    if (place_bomb(player->x + (PLAYER_HITBOX_SIZE / 2), player->y + (PLAYER_HITBOX_SIZE / 2), player->direction) == 1)
     {
-      player->cooldown = 100;
+      player->cooldown = 40;
       player->events->bomb = 0;
     }
   }
