@@ -13,6 +13,9 @@
 
 #include "../shared/shared.h"
 
+#define OFFSET 24;
+
+
 typedef struct s_game t_game;
 struct s_game {
   int socket;
@@ -21,7 +24,7 @@ struct s_game {
   SDL_Event event;
   Uint32 timer;
   int running;
-  SDL_Texture* textures[54];
+  SDL_Texture* textures[14];
   t_event player_event;
   int (*action_list[6])(int);
 };
@@ -70,6 +73,7 @@ int init_textures()
   }
 
   g_game->textures[0] = IMG_LoadTexture(g_game->renderer, "../img/elements.png");
+  g_game->textures[6] = IMG_LoadTexture(g_game->renderer, "../img/lives.png");
   g_game->textures[10] = IMG_LoadTexture(g_game->renderer, "../img/player1.png");
   g_game->textures[11] = IMG_LoadTexture(g_game->renderer, "../img/player2.png");
   g_game->textures[12] = IMG_LoadTexture(g_game->renderer, "../img/player3.png");
@@ -243,7 +247,7 @@ int init_game(char* address, int port)
     return (-1);
   }
 
-  g_game->window = SDL_CreateWindow("Bomberman", 0, 0, 650, 650, 0);
+  g_game->window = SDL_CreateWindow("Bomberman", 0, 0, 650, 700, 0);
   g_game->renderer = SDL_CreateRenderer(g_game->window, -1, 0);
   g_game->running = 1;
   g_game->timer = SDL_GetTicks();
@@ -367,7 +371,7 @@ void render_tile(int position, int type, int direction)
   SDL_Rect crop;
 
   rec.x = (position % 13) * ELEMENT_SIZE;
-  rec.y = (position / 13) * ELEMENT_SIZE;
+  rec.y = (position / 13) * ELEMENT_SIZE + OFFSET;
   rec.w = ELEMENT_SIZE;
   rec.h = ELEMENT_SIZE;
 
@@ -381,7 +385,7 @@ void render_player(int type, int x, int y, int direction)
   SDL_Rect crop;
 
   rec.x = x - 5;
-  rec.y = y - 5;
+  rec.y = y - 5 + OFFSET;
   rec.w = PLAYER_SIZE;
   rec.h = PLAYER_SIZE;
 
@@ -425,6 +429,31 @@ void render_map(char* map)
   }
 }
 
+void render_player_bombs(int player, int bombs) {
+  // series of three bombs. display with size of crop ...
+}
+
+void render_player_hp(int player, int hp) {
+  int x;
+  int y;
+  SDL_Rect rec;
+  SDL_Rect crop;
+
+  rec.x = (player % 2) == 0 ? 10 : 585;
+  rec.y = (player < 2) ? 8 : 682;
+  rec.w = 60;
+  rec.h = 10;
+
+  crop.x = 0;
+  crop.y = hp * 50;
+  crop.w = 300;
+  crop.h = 50;
+
+
+  SDL_RenderCopy(g_game->renderer, get_texture(6), &crop, &rec);
+}
+
+
 
 void render_players(t_player_info players[4])
 {
@@ -432,9 +461,14 @@ void render_players(t_player_info players[4])
 
   for (i = 0; i < 4; i++)
   {
-    if (players[i].playing == 1 && players[i].hp > 0)
+    if (players[i].playing == 1)
     {
-      render_player(i + 10, players[i].x, players[i].y, players[i].direction);
+      if (players[i].hp > 0)
+      {
+        render_player(i + 10, players[i].x, players[i].y, players[i].direction);
+        render_player_bombs(i, players[i].bombs);
+      }
+      render_player_hp(i, players[i].hp);
     }
   }
 }

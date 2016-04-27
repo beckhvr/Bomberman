@@ -8,6 +8,7 @@ typedef struct s_player_info
   int x;
   int y;
   int direction;
+  int bombs;
   int hp;
 } t_player_info;
 

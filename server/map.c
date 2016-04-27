@@ -39,6 +39,7 @@ int init_map()
   game->block = NULL;
   game->bomb = NULL;
   game->flame = NULL;
+  game->bonus = NULL;
 
   // placing sourounding blocks (unbreakable)
   // top
@@ -241,4 +242,5 @@ void free_map()
   free_elements(game->block);
   free_elements(game->bomb);
   free_elements(game->flame);
+  free_elements(game->bonus);
 }

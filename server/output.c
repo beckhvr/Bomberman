@@ -60,7 +60,7 @@ void set_map_block_meta(char* block, int position)
   set_nth_bit(block, 3, position_collides_with_list(position, game->bomb));
 }
 
-void sendDataToPlayers()
+void send_data_to_players()
 {
   t_container container;
   int i;

@@ -48,6 +48,7 @@ struct s_player
   int direction;
   t_event* events;
   int hp;
+  int bombs;
   int cooldown;
   int damage_cooldown;
 };
@@ -63,6 +64,7 @@ struct s_game
   t_element* block;
   t_element* bomb;
   t_element* flame;
+  t_element* bonus;
   void (*element_actions[4])(t_element*);
 };
 
@@ -108,7 +110,7 @@ void set_nth_bit(char*, int, int);
 int position_collides_with_list(int, t_element*);
 void set_block_on_position(char*, int);
 void set_map_block_meta(char*, int);
-void sendDataToPlayers();
+void send_data_to_players();
 int get_left_range(int, int);
 void init_players();
 int get_player_count();

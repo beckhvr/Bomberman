@@ -33,6 +33,10 @@ void run_game_cycle()
   compute_list(game->block);
   compute_list(game->bomb);
   compute_list(game->flame);
+
+  // to know if we should add a bonus to player
+  compute_list(game->bonus);
+
   run_players_actions();
   run_game_cleanup();
 }
@@ -65,7 +69,7 @@ void game_loop()
       handle_received_event();
 
     run_game_cycle();
-    sendDataToPlayers();
+    send_data_to_players();
 
     // we have a little wait period, for the moment it is 1 second
     usleep(16000);

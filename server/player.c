@@ -99,6 +99,7 @@ void format_player_info(t_container* container)
       container->players[i].y = game->players[i]->y;
       container->players[i].direction = game->players[i]->direction;
       container->players[i].hp = game->players[i]->hp;
+      container->players[i].bombs = game->players[i]->bombs;
     }
   }
 }
