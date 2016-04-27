@@ -9,6 +9,7 @@ typedef struct s_player_info
   int y;
   int direction;
   int bombs;
+  int cooldown;
   int hp;
 } t_player_info;
 

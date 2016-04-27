@@ -74,6 +74,7 @@ int init_textures()
 
   g_game->textures[0] = IMG_LoadTexture(g_game->renderer, "../img/elements.png");
   g_game->textures[6] = IMG_LoadTexture(g_game->renderer, "../img/lives.png");
+  g_game->textures[7] = IMG_LoadTexture(g_game->renderer, "../img/bombs.png");
   g_game->textures[10] = IMG_LoadTexture(g_game->renderer, "../img/player1.png");
   g_game->textures[11] = IMG_LoadTexture(g_game->renderer, "../img/player2.png");
   g_game->textures[12] = IMG_LoadTexture(g_game->renderer, "../img/player3.png");
@@ -429,8 +430,28 @@ void render_map(char* map)
   }
 }
 
-void render_player_bombs(int player, int bombs) {
-  // series of three bombs. display with size of crop ...
+void render_player_bombs(int player, int bombs, int cooldown) {
+  int x;
+  int y;
+  SDL_Rect rec;
+  SDL_Rect crop;
+
+  if (bombs == 1 && cooldown != 0)
+  {
+    bombs = 0;
+  }
+
+  rec.x = (player % 2) == 0 ? 70 : 580 - (bombs * 10);
+  rec.y = (player < 2) ? 8 : 682;
+  rec.w = bombs * 10;
+  rec.h = 10;
+
+  crop.x = 0;
+  crop.y = 0;
+  crop.w = bombs * 50;
+  crop.h = 50;
+
+  SDL_RenderCopy(g_game->renderer, get_texture(7), &crop, &rec);
 }
 
 void render_player_hp(int player, int hp) {
@@ -449,7 +470,6 @@ void render_player_hp(int player, int hp) {
   crop.w = 300;
   crop.h = 50;
 
-
   SDL_RenderCopy(g_game->renderer, get_texture(6), &crop, &rec);
 }
 
@@ -466,7 +486,7 @@ void render_players(t_player_info players[4])
       if (players[i].hp > 0)
       {
         render_player(i + 10, players[i].x, players[i].y, players[i].direction);
-        render_player_bombs(i, players[i].bombs);
+        render_player_bombs(i, players[i].bombs, players[i].cooldown);
       }
       render_player_hp(i, players[i].hp);
     }
