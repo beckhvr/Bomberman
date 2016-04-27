@@ -33,8 +33,6 @@ void run_game_cycle()
   compute_list(game->block);
   compute_list(game->bomb);
   compute_list(game->flame);
-
-  // to know if we should add a bonus to player
   compute_list(game->bonus);
 
   run_players_actions();
@@ -46,6 +44,7 @@ void run_game_cleanup()
   clean_up_list(&game->block);
   clean_up_list(&game->bomb);
   clean_up_list(&game->flame);
+  clean_up_list(&game->bonus);
 }
 
 void game_loop()

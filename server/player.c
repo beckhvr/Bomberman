@@ -62,6 +62,7 @@ void add_player(int address)
         }
 
         game->players[i]->bombs = 1;
+        game->players[i]->range = 60;
         game->players[i]->direction = 2;
         game->players[i]->cooldown = 0;
         game->players[i]->damage_cooldown = 0;
@@ -156,7 +157,7 @@ void run_player_actions(t_player* player)
 
   if (player->events->bomb > 0 && (player->cooldown == 0 || player->bombs > 1) && player->hp > 0)
   {
-    if (place_bomb(player->x + (PLAYER_HITBOX_SIZE / 2), player->y + (PLAYER_HITBOX_SIZE / 2), player->direction) == 1)
+    if (place_bomb(player->x + (PLAYER_HITBOX_SIZE / 2), player->y + (PLAYER_HITBOX_SIZE / 2), player->direction, player->range) == 1)
     {
       if (player->bombs > 1 && player->cooldown != 0)
       {

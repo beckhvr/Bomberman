@@ -56,7 +56,7 @@ int bomb_has_collisions(t_element* bomb)
   return collision;
 }
 
-int place_bomb(int x, int y, int direction)
+int place_bomb(int x, int y, int direction, int range)
 {
   t_element* bomb;
 
@@ -64,7 +64,7 @@ int place_bomb(int x, int y, int direction)
   {
     set_bomb_coordinates(bomb, x, y, direction);
     bomb->type = 2;
-    bomb->lifespan = 60;
+    bomb->lifespan = range;
     bomb->dx = 0;
     bomb->dy = 0;
     bomb->next = NULL;

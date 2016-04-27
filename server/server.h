@@ -49,6 +49,7 @@ struct s_player
   t_event* events;
   int hp;
   int bombs;
+  int range;
   int cooldown;
   int damage_cooldown;
 };
@@ -65,7 +66,7 @@ struct s_game
   t_element* bomb;
   t_element* flame;
   t_element* bonus;
-  void (*element_actions[4])(t_element*);
+  void (*element_actions[9])(t_element*);
 };
 
 /*----(Prototypes)-----------------------------------------------------------*/
@@ -74,7 +75,7 @@ void element_movements(t_element*);
 void run_players_actions();
 void set_bomb_coordinates(t_element*, int, int, int);
 int bomb_has_collisions(t_element*);
-int place_bomb(int, int, int);
+int place_bomb(int, int, int, int);
 void bomb_action(t_element*);
 void explode_bomb(t_element*);
 int collision_handler(t_collider*, t_collider*);
@@ -87,6 +88,7 @@ int init_file_listener();
 void accept_new_connection();
 int element_element_collision(t_element*, t_element*);
 t_element* get_element_collisions_with_list(t_element*, t_element*);
+t_player* get_element_collisions_with_players(t_element*);
 void handle_player_event();
 void handle_received_event();
 void set_flame_movement(t_element*, int);
@@ -123,6 +125,9 @@ void free_players();
 int player_element_collision(t_player*, t_element*);
 t_element* get_player_collisions_with_list(t_player*, t_element*);
 int player_has_collisions(t_player*);
+void bonus_range(t_element*);
+void bonus_bombs(t_element*);
+void bonus_lives(t_element*);
 
 /*----(Globals)--------------------------------------------------------------*/
 t_game* game;

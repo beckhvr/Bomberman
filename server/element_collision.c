@@ -24,6 +24,21 @@ int element_element_collision(t_element* current, t_element* element)
   return collision_handler(&c1, &c2);
 }
 
+t_player* get_element_collisions_with_players(t_element* element)
+{
+  int i;
+
+  for (i = 0; i < 4; i++)
+  {
+    if (game->players[i] && player_element_collision(game->players[i], element) > 0)
+    {
+      return game->players[i];
+    }
+  }
+
+  return NULL;
+}
+
 t_element* get_element_collisions_with_list(t_element* current, t_element* list)
 {
   t_element* element;
