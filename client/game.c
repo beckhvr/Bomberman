@@ -21,6 +21,7 @@ int init_game(char* address, int port)
 
   g_game->window = SDL_CreateWindow("Bomberman", 0, 0, 650, 700, 0);
   g_game->renderer = SDL_CreateRenderer(g_game->window, -1, 0);
+  SDL_SetRenderDrawColor(g_game->renderer, 112, 200, 160, 255);
   g_game->running = 1;
   g_game->timer = SDL_GetTicks();
   g_game->player_event.x = 0;

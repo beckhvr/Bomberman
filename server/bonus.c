@@ -83,10 +83,7 @@ void add_bonus_to_map()
   {
     bonus->x = i % 13 * ELEMENT_SIZE;
     bonus->y = i / 13 * ELEMENT_SIZE;
-
-    /*  TODO : random number between 4 and 8 !! */
-    bonus->type = 4;
-
+    bonus->type = 4 + rand() % 5;
     bonus->lifespan = 200;
     bonus->dx = 0;
     bonus->dy = 0;

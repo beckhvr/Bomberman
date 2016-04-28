@@ -65,17 +65,11 @@ void render_map(char* map)
   {
     render_block(&map[i], i);
     if (get_nth_bit(&map[i], 3) == 1)
-    {
       render_tile(i, 3, 50 * 0);
-    }
     if (get_nth_bit(&map[i], 0) == 1)
-    {
       render_tile(i, 4, 50 * 0);
-    }
     if (get_nth_bit(&map[i], 4) == 1)
-    {
       render_bonus(&map[i], i);
-    }
   }
 }
 
