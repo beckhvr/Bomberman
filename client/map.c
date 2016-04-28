@@ -29,16 +29,10 @@ void render_bonus(char* c, int position)
 
   if (get_nth_bit(c, 5) == 0)
   {
-    // render lives
     type = 32;
   }
   else
   {
-    // should give me :
-    // 20
-    // 21
-    // 30
-    // 31
     type = 20 + (get_nth_bit(c, 6) * 10) + get_nth_bit(c, 7);
   }
 
@@ -64,12 +58,12 @@ void render_map(char* map)
   for (i = 0; i < 169; i++)
   {
     render_block(&map[i], i);
+    if (get_nth_bit(&map[i], 4) == 1)
+      render_bonus(&map[i], i);
     if (get_nth_bit(&map[i], 3) == 1)
       render_tile(i, 3, 50 * 0);
     if (get_nth_bit(&map[i], 0) == 1)
       render_tile(i, 4, 50 * 0);
-    if (get_nth_bit(&map[i], 4) == 1)
-      render_bonus(&map[i], i);
   }
 }
 

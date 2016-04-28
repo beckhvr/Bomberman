@@ -15,21 +15,13 @@ void set_flame_movement(t_element* flame, int direction)
   flame->dy = 0;
 
   if (direction == 0)
-  {
     flame->dy = -1;
-  }
   else if (direction == 1)
-  {
     flame->dx = 1;
-  }
   else if (direction == 2)
-  {
     flame->dy = 1;
-  }
   else
-  {
     flame->dx = -1;
-  }
 }
 
 void create_flame(int x, int y, int direction, int range)
@@ -50,16 +42,18 @@ void create_flame(int x, int y, int direction, int range)
 void flame_action(t_element* flame)
 {
   t_element* block;
+  t_element* bonus;
   int i;
 
   if ((block = get_element_collisions_with_list(flame, game->block)) != NULL)
   {
     if (block->type != 0)
-    {
       block->lifespan = 0;
-    }
     flame->lifespan = 0;
   }
+
+  if ((bonus = get_element_collisions_with_list(flame, game->bonus)) != NULL)
+    bonus->lifespan = 0;
 
   for (i = 0; i < 4; i++)
   {
