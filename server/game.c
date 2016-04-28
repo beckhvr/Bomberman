@@ -28,12 +28,58 @@ void free_game()
   free_players();
 }
 
+void add_bonus_to_map()
+{
+  int i;
+  t_element* bonus;
+
+  i = rand() % 169;
+  if ((bonus = malloc(sizeof(t_element))) != NULL)
+  {
+    bonus->x = i % 13 * ELEMENT_SIZE;
+    bonus->y = i / 13 * ELEMENT_SIZE;
+
+    // TODO : random number between 4 and 8 !!
+    bonus->type = 4;
+
+    bonus->lifespan = 200;
+    bonus->dx = 0;
+    bonus->dy = 0;
+    bonus->next = NULL;
+    bonus->prev = NULL;
+
+    if (bonus_has_collisions(bonus) != 0)
+    {
+      printf("placing bonus !!\n");
+      add_element_to_list(&game->bonus, bonus);
+    }
+    else
+    {
+      free(bonus);
+    }
+  }
+}
+
+int get_list_size(t_element* list)
+{
+  int i;
+  t_element* element;
+
+  for (element = list, i = 0; element != NULL; element = element->next);
+  return i;
+}
+
 void run_game_cycle()
 {
   compute_list(game->block);
   compute_list(game->bomb);
   compute_list(game->flame);
   compute_list(game->bonus);
+
+  if (get_list_size(game->bonus))
+  {
+    add_bonus_to_map();
+  }
 
   run_players_actions();
   run_game_cleanup();

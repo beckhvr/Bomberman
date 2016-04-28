@@ -75,6 +75,7 @@ int init_textures()
   g_game->textures[0] = IMG_LoadTexture(g_game->renderer, "../img/elements.png");
   g_game->textures[6] = IMG_LoadTexture(g_game->renderer, "../img/lives.png");
   g_game->textures[7] = IMG_LoadTexture(g_game->renderer, "../img/bombs.png");
+  g_game->textures[8] = IMG_LoadTexture(g_game->renderer, "../img/bonus.png");
   g_game->textures[10] = IMG_LoadTexture(g_game->renderer, "../img/player1.png");
   g_game->textures[11] = IMG_LoadTexture(g_game->renderer, "../img/player2.png");
   g_game->textures[12] = IMG_LoadTexture(g_game->renderer, "../img/player3.png");
@@ -350,9 +351,15 @@ void crop_texture(SDL_Rect* crop, int type, int offset)
   {
     crop->y = 50 * (i);
   }
-  if (type > 9)
+  if (type > 9 && type < 20)
   {
     crop->x = 50 * offset;
+  }
+
+  if (type > 19)
+  {
+    crop->x = (type % 10) * 50;
+    crop->y = (type / 10) * 50;
   }
 }
 
@@ -361,6 +368,10 @@ SDL_Texture* get_texture(int type)
   if (type < 5)
   {
     return g_game->textures[0];
+  }
+  if (type > 19)
+  {
+    return g_game->textures[8];
   }
 
   return g_game->textures[type];
@@ -378,6 +389,28 @@ void render_tile(int position, int type, int direction)
 
   crop_texture(&crop, type, direction);
   SDL_RenderCopy(g_game->renderer, get_texture(type), &crop, &rec);
+}
+
+void render_bonus(char* c, int position)
+{
+  int type;
+
+  if (get_nth_bit(c, 5) == 0)
+  {
+    // render lives
+    type = 32;
+  }
+  else
+  {
+    // should give me :
+    // 20
+    // 21
+    // 30
+    // 31
+    type = 20 + (get_nth_bit(c, 6) * 10) + get_nth_bit(c, 7);
+  }
+
+  render_tile(position, type, 0);
 }
 
 void render_player(int type, int x, int y, int direction)
@@ -419,13 +452,15 @@ void render_map(char* map)
     render_block(&map[i], i);
     if (get_nth_bit(&map[i], 3) == 1)
     {
-      // TODO: for the moment set to 0
       render_tile(i, 3, 50 * 0);
     }
     if (get_nth_bit(&map[i], 0) == 1)
     {
-      // TODO: for the moment set to 0
       render_tile(i, 4, 50 * 0);
+    }
+    if (get_nth_bit(&map[i], 4) == 1)
+    {
+      render_bonus(&map[i], i);
     }
   }
 }

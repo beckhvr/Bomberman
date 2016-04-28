@@ -11,7 +11,9 @@
 
 void set_nth_bit(char* c, int bit, int value)
 {
-  *c |= value << bit;
+  // *c |= value << bit;
+  *c ^= (-value ^ *c) & (1 << bit);
+
 }
 
 int position_collides_with_list(int position, t_element* list)
@@ -48,6 +50,38 @@ void set_block_on_position(char* c, int position)
   set_nth_bit(c, 2, block->type);
 }
 
+
+
+void set_bonus_meta(char* c, int position)
+{
+  t_element element;
+  t_element* bonus;
+
+  element.x = (position % 13) * ELEMENT_SIZE;
+  element.y = (position / 13) * ELEMENT_SIZE;
+
+  set_nth_bit(c, 4, 0);
+  set_nth_bit(c, 5, 0);
+  set_nth_bit(c, 6, 0);
+  set_nth_bit(c, 7, 0);
+
+  if ((bonus = get_element_collisions_with_list(&element, game->bonus)) != NULL)
+  {
+    if (bonus->type < 8)
+    {
+      set_nth_bit(c, 5, 1);
+      if (bonus->type > 5)
+      {
+        set_nth_bit(c, 6, 1);
+      }
+      if (bonus->type % 2 == 1)
+      {
+        set_nth_bit(c, 7, 1);
+      }
+    }
+  }
+}
+
 void set_map_block_meta(char* block, int position)
 {
   // Bit 0 : Indique si la case est en flammes (1) ou non (0)
@@ -58,6 +92,14 @@ void set_map_block_meta(char* block, int position)
 
   // Bit 3 : Présence d'une bombe (0 : Pas de bombe, 1 : Bombe)
   set_nth_bit(block, 3, position_collides_with_list(position, game->bomb));
+
+  // 0000 -> nothing
+  // 1010 -> lives
+  // 1100 -> bombs -
+  // 1101 -> bombs +
+  // 1110 -> range -
+  // 1111 -> range +
+  set_bonus_meta(block, position);
 }
 
 void send_data_to_players()

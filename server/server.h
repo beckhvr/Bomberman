@@ -128,6 +128,7 @@ int player_has_collisions(t_player*);
 void bonus_range(t_element*);
 void bonus_bombs(t_element*);
 void bonus_lives(t_element*);
+int bonus_has_collisions(t_element*);
 
 /*----(Globals)--------------------------------------------------------------*/
 t_game* game;
