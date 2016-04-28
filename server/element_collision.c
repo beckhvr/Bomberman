@@ -27,10 +27,12 @@ int element_element_collision(t_element* current, t_element* element)
 t_player* get_element_collisions_with_players(t_element* element)
 {
   int i;
+  t_player* player;
 
   for (i = 0; i < 4; i++)
   {
-    if (game->players[i] && player_element_collision(game->players[i], element) > 0)
+    player = game->players[i];
+    if (player && player_element_collision(player, element) > 0)
     {
       return game->players[i];
     }
@@ -39,13 +41,13 @@ t_player* get_element_collisions_with_players(t_element* element)
   return NULL;
 }
 
-t_element* get_element_collisions_with_list(t_element* current, t_element* list)
+t_element* get_element_collisions_with_list(t_element* elm, t_element* list)
 {
   t_element* element;
 
   for (element = list; element != NULL; element = element->next)
   {
-    if (element_element_collision(current, element) > 0)
+    if (element_element_collision(elm, element) > 0)
     {
       return element;
     }

@@ -9,33 +9,33 @@
 */
 #include "server.h"
 
-void init_players()
+void add_player(int index, int address)
 {
-  int i;
+  t_player* player;
 
-  for (i = 0; i < 4; i++)
+  player = game->players[index];
+  player->address = address;
+  set_player_coordinates(player, index);
+  player->hp = 3;
+  player->bombs = 1;
+  player->range = 60;
+  player->cooldown = 0;
+  player->damage_cooldown = 0;
+
+  if ((player->events = malloc(sizeof(t_event))) == NULL)
   {
-    game->players[i] = NULL;
+    free(player);
+    game->players[index] = NULL;
+    close(address);
+    return;
   }
+  player->events->x = 0;
+  player->events->y = 0;
+  player->events->direction = 2;
+  player->events->bomb = 0;
 }
 
-int get_player_count()
-{
-  int count;
-
-  count = 0;
-  for (int i = 0; i < 4; i++)
-  {
-    if (game->players[i])
-    {
-      count++;
-    }
-  }
-
-  return count;
-}
-
-void add_player(int address)
+void handle_new_player(int address)
 {
   int i;
 
@@ -43,66 +43,11 @@ void add_player(int address)
   {
     if (game->players[i] == NULL)
     {
-
-      if ((game->players[i] = malloc(sizeof(t_player))) != NULL) {
-
-        // TODO: all of this extracted to a separat function to set details ...
-        game->players[i]->address = address;
-        game->players[i]->hp = 3;
-
-        if (i < 2) {
-          game->players[i]->y = 52;
-        } else {
-          game->players[i]->y = 552;
-        }
-        if (((i + 1) % 2) == 1) {
-          game->players[i]->x = 52;
-        } else {
-          game->players[i]->x = 552;
-        }
-
-        game->players[i]->bombs = 1;
-        game->players[i]->range = 60;
-        game->players[i]->direction = 2;
-        game->players[i]->cooldown = 0;
-        game->players[i]->damage_cooldown = 0;
-
-        if ((game->players[i]->events = malloc(sizeof(t_event))) == NULL)
-        {
-          free(game->players[i]);
-          game->players[i] = NULL;
-          close(address);
-          return;
-        }
-        game->players[i]->events->x = 0;
-        game->players[i]->events->y = 0;
-        game->players[i]->events->direction = 2;
-        game->players[i]->events->bomb = 0;
-      } else {
+      if ((game->players[i] = malloc(sizeof(t_player))) != NULL)
+        add_player(i, address);
+      else
         close(address);
-      }
-
       break;
-    }
-  }
-}
-
-void format_player_info(t_container* container)
-{
-  int i;
-
-  for (i = 0; i < 4; i++)
-  {
-    container->players[i].playing = 0;
-    if (game->players[i])
-    {
-      container->players[i].playing = 1;
-      container->players[i].x = game->players[i]->x;
-      container->players[i].y = game->players[i]->y;
-      container->players[i].direction = game->players[i]->direction;
-      container->players[i].hp = game->players[i]->hp;
-      container->players[i].bombs = game->players[i]->bombs;
-      container->players[i].cooldown = game->players[i]->cooldown;
     }
   }
 }
@@ -114,74 +59,18 @@ void free_player(t_player* player)
   free(player);
 }
 
-void apply_player_event(t_player* player, t_event* event)
+void set_player_coordinates(t_player* player, int i)
 {
-  player->events->x = event->x;
-  player->events->y = event->y;
-  player->events->direction = event->direction;
-  player->events->bomb = event->bomb;
-}
+  player->x = 552;
+  player->y = 552;
+  player->direction = 2;
 
-void run_player_actions(t_player* player)
-{
-  int factor;
-
-  factor = 2; // speeding up the movement a bit
-  player->direction = player->events->direction;
-
-  if (player->events->x != 0)
+  if (i < 2)
   {
-    player->x += player->events->x * factor;
-    if (player_has_collisions(player))
-    {
-      player->x -= player->events->x * factor;
-    }
+    player->y = 52;
   }
-  if (player->events->y != 0)
+  if (((i + 1) % 2) == 1)
   {
-    player->y += player->events->y * factor;
-    if (player_has_collisions(player))
-    {
-      player->y -= player->events->y * factor;
-    }
-  }
-
-  if (player->cooldown > 0)
-  {
-    player->cooldown -= 1;
-  }
-  if (player->damage_cooldown > 0)
-  {
-    player->damage_cooldown -= 1;
-  }
-
-  if (player->events->bomb > 0 && (player->cooldown == 0 || player->bombs > 1) && player->hp > 0)
-  {
-    if (place_bomb(player->x + (PLAYER_HITBOX_SIZE / 2), player->y + (PLAYER_HITBOX_SIZE / 2), player->direction, player->range) == 1)
-    {
-      if (player->bombs > 1 && player->cooldown != 0)
-      {
-        player->bombs -= 1;
-        player->cooldown = 0;
-      }
-      else
-      {
-        player->cooldown = 100;
-      }
-      player->events->bomb = 0;
-    }
-  }
-}
-
-void free_players()
-{
-  int i;
-
-  for (i = 0; i < 4; i++)
-  {
-    if (game->players[i])
-    {
-      free_player(game->players[i]);
-    }
+    player->x = 52;
   }
 }

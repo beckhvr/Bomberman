@@ -9,7 +9,6 @@
 */
 #include "server.h"
 
-// creating a socket to handle entering connexions.
 int create_connection_socket(int port)
 {
   int connection_socket;
@@ -38,7 +37,6 @@ int create_connection_socket(int port)
   return connection_socket;
 }
 
-// returns max file listener
 int init_file_listener()
 {
   int max;
@@ -77,7 +75,7 @@ void accept_new_connection()
   }
 
   if (get_player_count() < 4)
-    add_player(new_socket);
+    handle_new_player(new_socket);
   else
     close(new_socket);
 }

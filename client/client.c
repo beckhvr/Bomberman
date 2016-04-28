@@ -15,7 +15,6 @@
 
 #define OFFSET 24;
 
-
 typedef struct s_game t_game;
 struct s_game {
   int socket;

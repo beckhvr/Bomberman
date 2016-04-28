@@ -9,57 +9,6 @@
 */
 #include "server.h"
 
-void bonus_range(t_element* bonus)
-{
-  t_player* player;
-
-  if ((player = get_element_collisions_with_players(bonus)) != NULL)
-  {
-    if (bonus->type == 4 && player->range < 90)
-    {
-      player->range += 30;
-    }
-    else if (bonus->type == 5 && player->range > 30)
-    {
-      player->range -= 30;
-    }
-    bonus->lifespan = 0;
-  }
-}
-
-void bonus_bombs(t_element* bonus)
-{
-  t_player* player;
-
-  if ((player = get_element_collisions_with_players(bonus)) != NULL)
-  {
-    if (bonus->type == 6 && player->bombs < 3)
-    {
-      player->bombs += 1;
-    }
-    else if (bonus->type == 7 && player->bombs > 1)
-    {
-      player->range -= 1;
-    }
-    bonus->lifespan = 0;
-  }
-}
-
-void bonus_lives(t_element* bonus)
-{
-  t_player* player;
-
-  if ((player = get_element_collisions_with_players(bonus)) != NULL)
-  {
-    if (player->hp < 3)
-    {
-      player->hp += 1;
-    }
-
-    bonus->lifespan = 0;
-  }
-}
-
 void init_element_actions()
 {
   int i;

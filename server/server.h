@@ -116,7 +116,7 @@ void send_data_to_players();
 int get_left_range(int, int);
 void init_players();
 int get_player_count();
-void add_player(int);
+void handle_new_player(int);
 void format_player_info(t_container*);
 void free_player(t_player*);
 void apply_player_event(t_player*, t_event*);
@@ -129,6 +129,16 @@ void bonus_range(t_element*);
 void bonus_bombs(t_element*);
 void bonus_lives(t_element*);
 int bonus_has_collisions(t_element*);
+void bonus_range(t_element*);
+void bonus_bombs(t_element*);
+void bonus_lives(t_element*);
+int get_list_size(t_element*);
+void add_bonus_to_map();
+void set_bonus_meta(char*, int);
+void move_player(t_player*);
+void handle_bomb_action(t_player*);
+void add_player(int, int);
+void set_player_coordinates(t_player*, int);
 
 /*----(Globals)--------------------------------------------------------------*/
 t_game* game;
