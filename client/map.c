@@ -81,8 +81,6 @@ void render_map(char* map)
 
 void render_player_bombs(int player, int bombs, int cooldown)
 {
-  int x;
-  int y;
   SDL_Rect rec;
   SDL_Rect crop;
 

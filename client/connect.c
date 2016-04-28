@@ -28,7 +28,7 @@ int connect_to_server(char* address, int port)
   dest.sin_family = AF_INET;
   dest.sin_port = htons(port);
 
-  if (inet_aton(address, &dest.sin_addr.s_addr) == 0)
+  if (inet_aton(address, (struct in_addr *)&dest.sin_addr.s_addr) == 0)
   {
     return (-1);
   }

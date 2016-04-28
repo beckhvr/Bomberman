@@ -25,7 +25,7 @@ void set_bonus_meta(char* c, int position)
   bonus = get_element_collisions_with_list(&element, game->bonus);
   if (bonus)
   {
-    // TODO : check that I am using the correct things for life bonus ...
+    /* TODO : check that I am using the correct things for life bonus ... */
     set_nth_bit(c, 5, 1);
     if (bonus->type < 8)
     {
@@ -39,7 +39,10 @@ void set_bonus_meta(char* c, int position)
 
 void set_nth_bit(char* c, int bit, int value)
 {
-  // *c |= value << bit;
+  /*
+    TODO: remove this once i'm sure the algorythm is good
+    *c |= value << bit;
+  */
   *c ^= (-value ^ *c) & (1 << bit);
 
 }

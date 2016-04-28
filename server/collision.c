@@ -46,8 +46,6 @@ int check_top_left_collision(t_collider* c1, t_collider* c2)
 
 int check_top_right_collision(t_collider* c1, t_collider* c2)
 {
-
-  //
   if ((c1->x + c1->s) > c2->x && (c1->x + c1->s) < (c2->x + c2->s))
   {
     if (c1->y > c2->y && c1->y < (c2->y + c2->s))

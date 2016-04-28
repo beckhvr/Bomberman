@@ -74,8 +74,6 @@ void game_loop()
 
     run_game_cycle();
     send_data_to_players();
-
-    // we have a little wait period, for the moment it is 1 second
     usleep(16000);
   }
 }

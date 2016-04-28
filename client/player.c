@@ -43,8 +43,6 @@ void render_player(int type, int x, int y, int direction)
 
 void render_player_hp(int player, int hp)
 {
-  int x;
-  int y;
   SDL_Rect rec;
   SDL_Rect crop;
 

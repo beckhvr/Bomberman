@@ -7,8 +7,7 @@ SERVER_OBJS = $(SERVER_SRCS:.c=.o)
 CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
 CC = gcc
 RM = rm -f
-# CFLAGS	=	-ansi -pedantic -W -Wall -Werror `sdl2-config --cflags`
-CFLAGS = ''
+CFLAGS = -pedantic -W -Wall -Werror
 CLIENT_CFLAGS = `sdl2-config --cflags`
 LDFLAGS	=	`sdl2-config --libs` -lSDL2_image
 

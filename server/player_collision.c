@@ -11,13 +11,13 @@
 
 int player_element_collision(t_player* player, t_element* element)
 {
+  t_collider player_collider;
+  t_collider element_collider;
+
   if (player->hp == 0)
   {
     return (0);
   }
-
-  t_collider player_collider;
-  t_collider element_collider;
 
   player_collider.x = player->x;
   player_collider.y = player->y;

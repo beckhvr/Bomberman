@@ -13,8 +13,9 @@ void handle_player_event()
 {
   t_event event;
   t_player* player;
+  int i;
 
-  for (int i = 0; i < 4; i++) {
+  for (i = 0; i < 4; i++) {
     if ((player = game->players[i]) == NULL)
     {
       continue;
