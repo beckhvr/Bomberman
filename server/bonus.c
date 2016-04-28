@@ -78,7 +78,9 @@ void add_bonus_to_map()
   int i;
   t_element* bonus;
 
-  i = rand() % 169;
+  i = (rand() % 140) + 16;
+  if (i % 13 < 2 || i % 13 > 10 || i / 13 < 2 || i / 13 > 10)
+    return;
   if ((bonus = malloc(sizeof(t_element))) != NULL)
   {
     bonus->x = i % 13 * ELEMENT_SIZE;
@@ -89,8 +91,7 @@ void add_bonus_to_map()
     bonus->dy = 0;
     bonus->next = NULL;
     bonus->prev = NULL;
-
-    if (bonus_has_collisions(bonus) != 0)
+    if (bonus_has_collisions(bonus) == 0)
       add_element_to_list(&game->bonus, bonus);
     else
       free(bonus);

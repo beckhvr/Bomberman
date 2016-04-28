@@ -14,6 +14,6 @@ int get_list_size(t_element* list)
   int i;
   t_element* element;
 
-  for (element = list, i = 0; element != NULL; element = element->next);
+  for (element = list, i = 0; element != NULL; element = element->next, i++);
   return i;
 }

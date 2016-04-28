@@ -35,7 +35,7 @@ void run_game_cycle()
   compute_list(game->flame);
   compute_list(game->bonus);
 
-  if (get_list_size(game->bonus))
+  if (get_list_size(game->bonus) < 2)
   {
     add_bonus_to_map();
   }
