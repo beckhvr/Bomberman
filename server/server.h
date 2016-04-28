@@ -139,6 +139,9 @@ void move_player(t_player*);
 void handle_bomb_action(t_player*);
 void add_player(int, int);
 void set_player_coordinates(t_player*, int);
+void place_unbreakable_blocks();
+void place_unbreakable_blocks();
+void place_breakable_blocks();
 
 /*----(Globals)--------------------------------------------------------------*/
 t_game* game;

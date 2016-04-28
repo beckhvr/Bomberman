@@ -35,7 +35,7 @@ void move_player(t_player* player)
 {
   int factor;
 
-  factor = 2; // speeding up the movement a bit
+  factor = 2;
   player->direction = player->events->direction;
   if (player->events->x != 0)
   {
