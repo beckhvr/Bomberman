@@ -92,7 +92,7 @@ t_player* get_element_collisions_with_players(t_element*);
 void handle_player_event();
 void handle_received_event();
 void set_flame_movement(t_element*, int);
-void create_flame(int, int, int);
+void create_flame(int, int, int, int);
 void flame_action(t_element*);
 int init_game();
 void free_game();

@@ -39,10 +39,10 @@ void bonus_range(t_element* bonus)
 
   if ((player = get_element_collisions_with_players(bonus)) != NULL)
   {
-    if (bonus->type == 4 && player->range < 90)
-      player->range += 30;
-    else if (bonus->type == 5 && player->range > 30)
-      player->range -= 30;
+    if (bonus->type == 4 && player->range < 60)
+      player->range += 15;
+    else if (bonus->type == 5 && player->range > 15)
+      player->range -= 15;
     bonus->lifespan = 0;
   }
 }
@@ -56,7 +56,7 @@ void bonus_bombs(t_element* bonus)
     if (bonus->type == 6 && player->bombs < 3)
       player->bombs += 1;
     else if (bonus->type == 7 && player->bombs > 1)
-      player->range -= 1;
+      player->bombs -= 1;
     bonus->lifespan = 0;
   }
 }
@@ -84,7 +84,7 @@ void add_bonus_to_map()
     bonus->x = i % 13 * ELEMENT_SIZE;
     bonus->y = i / 13 * ELEMENT_SIZE;
     bonus->type = 4 + rand() % 5;
-    bonus->lifespan = 200;
+    bonus->lifespan = -1;
     bonus->dx = 0;
     bonus->dy = 0;
     bonus->next = NULL;

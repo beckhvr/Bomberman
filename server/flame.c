@@ -32,7 +32,7 @@ void set_flame_movement(t_element* flame, int direction)
   }
 }
 
-void create_flame(int x, int y, int direction)
+void create_flame(int x, int y, int direction, int range)
 {
   t_element* flame;
 
@@ -42,7 +42,7 @@ void create_flame(int x, int y, int direction)
     flame->y = y;
     flame->type = 3;
     set_flame_movement(flame, direction);
-    flame->lifespan = 30;
+    flame->lifespan = range;
     add_element_to_list(&game->flame, flame);
   }
 }

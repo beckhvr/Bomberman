@@ -64,8 +64,8 @@ int place_bomb(int x, int y, int direction, int range)
   {
     set_bomb_coordinates(bomb, x, y, direction);
     bomb->type = 2;
-    bomb->lifespan = range;
-    bomb->dx = 0;
+    bomb->lifespan = 60;
+    bomb->dx = range;
     bomb->dy = 0;
     bomb->next = NULL;
 
@@ -96,6 +96,6 @@ void explode_bomb(t_element* bomb)
 
   for (i = 0; i < 4; i++)
   {
-    create_flame(bomb->x, bomb->y, i);
+    create_flame(bomb->x, bomb->y, i, bomb->dx);
   }
 }

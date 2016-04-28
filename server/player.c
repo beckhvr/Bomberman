@@ -18,7 +18,7 @@ void add_player(int index, int address)
   set_player_coordinates(player, index);
   player->hp = 3;
   player->bombs = 1;
-  player->range = 60;
+  player->range = 30;
   player->cooldown = 0;
   player->damage_cooldown = 0;
 

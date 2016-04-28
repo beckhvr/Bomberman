@@ -14,15 +14,6 @@ void set_map_block_meta(char* block, int position)
   set_nth_bit(block, 0, position_collides_with_list(position, game->flame));
   set_block_on_position(block, position);
   set_nth_bit(block, 3, position_collides_with_list(position, game->bomb));
-  /*
-    TODO: Remove this comment
-    0000 -> nothing
-    1010 -> lives
-    1100 -> bombs -
-    1101 -> bombs +
-    1110 -> range -
-    1111 -> range +
-  */
   set_bonus_meta(block, position);
 }
 
